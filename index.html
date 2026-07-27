@@ -19,95 +19,143 @@
             line-height: 1.6;
             color: var(--text);
             background-color: #fff;
+            overflow-x: hidden;
         }
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
         .logo {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background: white;
-            border-radius: 25px;
-            padding: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-radius: 22px;
+            padding: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             margin-bottom: 20px;
         }
-        h1 { font-size: 2.8rem; margin: 10px 0; }
-        .subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 10px 0; }
+        .subtitle { font-size: 1.1rem; opacity: 0.95; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto; }
         
         .play-store-badge {
             display: inline-block;
             background: #000;
             color: white;
-            padding: 12px 25px;
-            border-radius: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.1rem;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background 0.2s;
         }
-        .play-store-badge:hover { transform: scale(1.05); }
+        .play-store-badge:hover { transform: scale(1.03); background: #222; }
 
+        /* --- 1. Responsive Features Grid --- */
         .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centers items if there's only 1 on a row */
+            gap: 25px;
             padding: 60px 0;
         }
         .feature-card {
+            flex: 1 1 300px; /* Base size 300px, grow to fill */
+            max-width: 350px;
             text-align: center;
-            padding: 30px;
+            padding: 35px 25px;
             background: var(--light);
-            border-radius: 20px;
+            border-radius: 24px;
+            transition: translateY 0.3s;
         }
+        .feature-card:hover { transform: translateY(-5px); }
         .feature-card i {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 { margin-bottom: 12px; color: var(--dark); }
+
+        /* --- 2. Screenshot Carousel --- */
+        .screenshots-section {
+            background-color: #f9fbf7;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .slider-wrapper {
+            position: relative;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+        }
+        .screenshot-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px 10px;
+            scrollbar-width: none; /* Hide scrollbar Firefox */
+            -ms-overflow-style: none;  /* Hide scrollbar IE/Edge */
+        }
+        .screenshot-container::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+
+        .screenshot-container img {
+            height: 480px; /* Fixed height for consistency */
+            width: auto;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            border: 4px solid white;
+            flex-shrink: 0;
         }
 
-        .screenshots {
-            background-color: var(--light);
-            padding: 60px 20px;
-            text-align: center;
-        }
-        .screenshot-grid {
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
             display: flex;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: background 0.2s;
         }
-        .screenshot-grid img {
-            width: 220px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 4px solid white;
+        .nav-btn:hover { background: var(--secondary); }
+        .nav-btn.left { left: -15px; }
+        .nav-btn.right { right: -15px; }
+
+        @media (max-width: 600px) {
+            .nav-btn { display: none; } /* Hide arrows on mobile, use touch scroll */
+            .screenshot-container img { height: 400px; }
         }
 
         footer {
             background: var(--dark);
             color: white;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
         }
-        footer a { color: #A5D6A7; text-decoration: none; margin: 0 15px; }
+        footer a { color: #A5D6A7; text-decoration: none; margin: 0 15px; font-weight: 500; }
         footer a:hover { text-decoration: underline; }
+        .footer-logo { width: 40px; opacity: 0.8; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="container">
-        <!-- Replace 'logo.png' with your actual logo file name later -->
         <img src="images/ic_launcher-playstore.png" alt="Digital Garden Logo" class="logo" onerror="this.src='https://img.icons8.com/color/144/potted-plant.png'">
         <h1>Digital Garden</h1>
         <p class="subtitle">Your smart botanical companion. Grow with confidence using automated care and expert AI diagnosis.</p>
@@ -126,8 +174,8 @@
         </div>
         <div class="feature-card">
             <i class="fas fa-wand-magic-sparkles"></i>
-            <h3>AI Health Diagnosis</h3>
-            <p>Find out what's wrong with your plant instantly by taking a photo. Get professional advice from our AI Expert.</p>
+            <h3>AI Health Expert</h3>
+            <p>Identify plant diseases instantly by taking a photo. Get professional recovery advice from our AI Expert.</p>
         </div>
         <div class="feature-card">
             <i class="fas fa-book-open"></i>
@@ -137,23 +185,38 @@
     </div>
 </section>
 
-<section class="screenshots">
+<section class="screenshots-section">
     <div class="container">
         <h2>Documentation & Growth</h2>
         <p>Keep a visual diary of your plants and watch them thrive over time.</p>
-        <div class="screenshot-grid">
-            <!-- Add your screenshot files here as screen1.jpg, screen2.jpg etc -->
-            <img src="images/screenshot1.png" alt="Garden View" onerror="this.style.display='none'">
-            <img src="images/screenshot2.png" alt="Plant Detail" onerror="this.style.display='none'">
-            <img src="images/screenshot3.png" alt="AI Expert" onerror="this.style.display='none'">
-            <img src="images/screenshot4.png" alt="AI Expert" onerror="this.style.display='none'">
-            <img src="images/screenshot5.png" alt="AI Expert" onerror="this.style.display='none'">
+        
+        <div class="slider-wrapper">
+            <button class="nav-btn left" onclick="scrollSlider(-1)"><i class="fas fa-chevron-left"></i></button>
+            
+            <div class="screenshot-container" id="screenshotSlider">
+                <img src="images/garden_list_view.png" alt="Garden View">
+                <img src="images/add_plant_view.png" alt="Add a new plant to your garden">
+                <img src="images/plant_detail_view.png" alt="Detail view of your plant">
+                <img src="images/ai_help_view.png" alt="AI Expert">
+                <img src="images/recognition.png" alt="Plant help species recognition">
+                <img src="images/daily_schedule.png" alt="Additional hint for your plant">
+                <img src="images/additional_hints_view1.png" alt="Additional hint for your plant">
+                <img src="images/additional_hints_view2.png" alt="Additional hint for your plant">
+                <img src="images/additional_hints_view3.png" alt="Additional hint for your plant">
+                <img src="images/theme_personalization.png" alt="Icon theme personalization">
+                <img src="images/theme_color_personalization.png" alt="Color theme personalization">
+                <img src="images/back_up.png" alt="Offline and Online back-up support">
+                <img src="images/multi_language.png" alt="Multi language support">
+            </div>
+            
+            <button class="nav-btn right" onclick="scrollSlider(1)"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 </section>
 
 <footer>
     <div class="container">
+        <img src="images/ic_launcher-playstore.png" class="footer-logo" alt="">
         <p>&copy; 2026 Digital Garden. All rights reserved.</p>
         <p>
             <a href="privacy.html">Privacy Policy</a>
@@ -161,6 +224,17 @@
         </p>
     </div>
 </footer>
+
+<script>
+    function scrollSlider(direction) {
+        const slider = document.getElementById('screenshotSlider');
+        const scrollAmount = 300; // Scroll by one item approx
+        slider.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+</script>
 
 </body>
 </html>
