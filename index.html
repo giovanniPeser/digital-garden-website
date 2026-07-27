@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Garden | Smart Plant Care & AI Diagnosis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D5A27;
+            --secondary: #4CAF50;
+            --light: #F1F8E9;
+            --dark: #1B3022;
+            --text: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #fff;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 25px;
+            padding: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 2.8rem; margin: 10px 0; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px; }
+        
+        .play-store-badge {
+            display: inline-block;
+            background: #000;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+        .play-store-badge:hover { transform: scale(1.05); }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 60px 0;
+        }
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: var(--light);
+            border-radius: 20px;
+        }
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .screenshots {
+            background-color: var(--light);
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .screenshot-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .screenshot-grid img {
+            width: 220px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 4px solid white;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        footer a { color: #A5D6A7; text-decoration: none; margin: 0 15px; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <!-- Replace 'logo.png' with your actual logo file name later -->
+        <img src="images/ic_launcher-playstore.png" alt="Digital Garden Logo" class="logo" onerror="this.src='https://img.icons8.com/color/144/potted-plant.png'">
+        <h1>Digital Garden</h1>
+        <p class="subtitle">Your smart botanical companion. Grow with confidence using automated care and expert AI diagnosis.</p>
+        <a href="https://play.google.com/store/apps/details?id=com.digitalgarden" class="play-store-badge">
+            <i class="fab fa-google-play"></i> Get it on Google Play
+        </a>
+    </div>
+</header>
+
+<section class="container">
+    <div class="features">
+        <div class="feature-card">
+            <i class="fas fa-droplet"></i>
+            <h3>Smart Reminders</h3>
+            <p>Custom schedules for watering and fertilizing tailored to your specific species and environment.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <h3>AI Health Diagnosis</h3>
+            <p>Find out what's wrong with your plant instantly by taking a photo. Get professional advice from our AI Expert.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-book-open"></i>
+            <h3>Species Database</h3>
+            <p>Detailed care hints for hundreds of plants including soil types, light requirements, and pot sizing.</p>
+        </div>
+    </div>
+</section>
+
+<section class="screenshots">
+    <div class="container">
+        <h2>Documentation & Growth</h2>
+        <p>Keep a visual diary of your plants and watch them thrive over time.</p>
+        <div class="screenshot-grid">
+            <!-- Add your screenshot files here as screen1.jpg, screen2.jpg etc -->
+            <img src="images/screenshot1.png" alt="Garden View" onerror="this.style.display='none'">
+            <img src="images/screenshot2.png" alt="Plant Detail" onerror="this.style.display='none'">
+            <img src="images/screenshot3.png" alt="AI Expert" onerror="this.style.display='none'">
+            <img src="images/screenshot4.png" alt="AI Expert" onerror="this.style.display='none'">
+            <img src="images/screenshot5.png" alt="AI Expert" onerror="this.style.display='none'">
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2026 Digital Garden. All rights reserved.</p>
+        <p>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="mailto:feedback@digitalgardensupport.com">Support</a>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
