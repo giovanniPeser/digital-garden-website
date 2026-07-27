@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Garden | Smart Plant Care & AI Diagnosis</title>
+    <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -13,25 +14,31 @@
             --dark: #1B3022;
             --text: #333;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
+            padding: 0;
             line-height: 1.6;
             color: var(--text);
             background-color: #fff;
             overflow-x: hidden;
         }
+
+        /* --- Header --- */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 60px 20px;
             text-align: center;
         }
+
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
         }
+
         .logo {
             width: 100px;
             height: 100px;
@@ -41,8 +48,9 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             margin-bottom: 20px;
         }
-        h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 10px 0; }
-        .subtitle { font-size: 1.1rem; opacity: 0.95; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        h1 { font-size: clamp(2.2rem, 5vw, 3rem); margin: 10px 0; }
+        .subtitle { font-size: 1.1rem; opacity: 0.95; margin-bottom: 30px; max-width: 700px; margin: 0 auto 30px auto; }
         
         .play-store-badge {
             display: inline-block;
@@ -52,68 +60,71 @@
             border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.2s;
         }
-        .play-store-badge:hover { transform: scale(1.03); background: #222; }
+        .play-store-badge:hover { transform: scale(1.05); }
 
-        /* --- 1. Responsive Features Grid --- */
-        .features {
+        /* --- Features Grid --- */
+        .features-section { padding: 60px 0; }
+        .features-grid {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Centers items if there's only 1 on a row */
+            justify-content: center;
             gap: 25px;
-            padding: 60px 0;
         }
         .feature-card {
-            flex: 1 1 300px; /* Base size 300px, grow to fill */
+            flex: 1 1 300px;
             max-width: 350px;
             text-align: center;
-            padding: 35px 25px;
+            padding: 40px 25px;
             background: var(--light);
-            border-radius: 24px;
-            transition: translateY 0.3s;
+            border-radius: 28px;
+            transition: transform 0.3s ease;
         }
         .feature-card:hover { transform: translateY(-5px); }
-        .feature-card i {
-            font-size: 2.8rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
+        .feature-card i { font-size: 2.8rem; color: var(--primary); margin-bottom: 20px; }
         .feature-card h3 { margin-bottom: 12px; color: var(--dark); }
 
-        /* --- 2. Screenshot Carousel --- */
+        /* --- Carousel Section --- */
         .screenshots-section {
             background-color: #f9fbf7;
             padding: 80px 0;
             text-align: center;
         }
+
         .slider-wrapper {
             position: relative;
-            margin-top: 40px;
+            margin: 40px auto 0 auto;
+            max-width: 100%;
+            width: 1000px;
             display: flex;
             align-items: center;
         }
+
         .screenshot-container {
             display: flex;
             overflow-x: auto;
             scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
             gap: 20px;
-            padding: 20px 10px;
-            scrollbar-width: none; /* Hide scrollbar Firefox */
-            -ms-overflow-style: none;  /* Hide scrollbar IE/Edge */
+            padding: 20px 0;
+            width: 100%;
+            scrollbar-width: none;
         }
-        .screenshot-container::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+        .screenshot-container::-webkit-scrollbar { display: none; }
 
         .screenshot-container img {
-            height: 480px; /* Fixed height for consistency */
+            height: 520px;
             width: auto;
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             border: 4px solid white;
             flex-shrink: 0;
+            scroll-snap-align: center;
         }
 
+        /* --- Navigation Arrows --- */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -121,35 +132,49 @@
             background: var(--primary);
             color: white;
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
-            z-index: 10;
+            z-index: 20;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: background 0.2s, transform 0.2s;
         }
-        .nav-btn:hover { background: var(--secondary); }
-        .nav-btn.left { left: -15px; }
-        .nav-btn.right { right: -15px; }
+        .nav-btn:hover { background: var(--secondary); transform: translateY(-50%) scale(1.1); }
+        .nav-btn:active { transform: translateY(-50%) scale(0.9); }
+        
+        .nav-btn.left { left: 10px; }
+        .nav-btn.right { right: 10px; }
 
-        @media (max-width: 600px) {
-            .nav-btn { display: none; } /* Hide arrows on mobile, use touch scroll */
-            .screenshot-container img { height: 400px; }
+        /* Tablet/Desktop adjust arrows to be outside if space permits */
+        @media (min-width: 1150px) {
+            .nav-btn.left { left: -60px; }
+            .nav-btn.right { right: -60px; }
         }
 
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            .screenshots-section { padding: 40px 0; }
+            .screenshot-container img { height: 420px; }
+            .nav-btn {
+                width: 38px;
+                height: 38px;
+                background: rgba(45, 90, 39, 0.8); /* Semi-transparent on mobile */
+            }
+        }
+
+        /* --- Footer --- */
         footer {
             background: var(--dark);
             color: white;
-            padding: 50px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
         footer a { color: #A5D6A7; text-decoration: none; margin: 0 15px; font-weight: 500; }
         footer a:hover { text-decoration: underline; }
-        .footer-logo { width: 40px; opacity: 0.8; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -165,22 +190,22 @@
     </div>
 </header>
 
-<section class="container">
-    <div class="features">
+<section class="container features-section">
+    <div class="features-grid">
         <div class="feature-card">
             <i class="fas fa-droplet"></i>
             <h3>Smart Reminders</h3>
-            <p>Custom schedules for watering and fertilizing tailored to your specific species and environment.</p>
+            <p>Custom schedules for watering and fertilizing tailored to your specific plant species.</p>
         </div>
         <div class="feature-card">
             <i class="fas fa-wand-magic-sparkles"></i>
             <h3>AI Health Expert</h3>
-            <p>Identify plant diseases instantly by taking a photo. Get professional recovery advice from our AI Expert.</p>
+            <p>Identify plant diseases instantly by taking a photo. Get professional advice from our AI.</p>
         </div>
         <div class="feature-card">
             <i class="fas fa-book-open"></i>
-            <h3>Species Database</h3>
-            <p>Detailed care hints for hundreds of plants including soil types, light requirements, and pot sizing.</p>
+            <h3>Rich Database</h3>
+            <p>Detailed care hints including soil types, light requirements, and pot sizing.</p>
         </div>
     </div>
 </section>
@@ -191,7 +216,9 @@
         <p>Keep a visual diary of your plants and watch them thrive over time.</p>
         
         <div class="slider-wrapper">
-            <button class="nav-btn left" onclick="scrollSlider(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-btn left" onclick="scrollSlider(-1)" aria-label="Previous image">
+                <i class="fas fa-chevron-left"></i>
+            </button>
             
             <div class="screenshot-container" id="screenshotSlider">
                 <img src="images/garden_list_view.png" alt="Garden View">
@@ -209,14 +236,15 @@
                 <img src="images/multi_language.png" alt="Multi language support">
             </div>
             
-            <button class="nav-btn right" onclick="scrollSlider(1)"><i class="fas fa-chevron-right"></i></button>
+            <button class="nav-btn right" onclick="scrollSlider(1)" aria-label="Next image">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 </section>
 
 <footer>
     <div class="container">
-        <img src="images/ic_launcher-playstore.png" class="footer-logo" alt="">
         <p>&copy; 2026 Digital Garden. All rights reserved.</p>
         <p>
             <a href="privacy.html">Privacy Policy</a>
@@ -228,7 +256,10 @@
 <script>
     function scrollSlider(direction) {
         const slider = document.getElementById('screenshotSlider');
-        const scrollAmount = 300; // Scroll by one item approx
+        if (!slider) return;
+
+        // Calculate scroll amount: visible width minus one gap to keep context
+        const scrollAmount = slider.clientWidth * 0.8; 
         slider.scrollBy({
             left: direction * scrollAmount,
             behavior: 'smooth'
