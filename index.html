@@ -486,19 +486,20 @@
             }
         });
 
-        // Update screenshots path robustly
+        // Update screenshots path robustly with cache busting
         document.querySelectorAll('.screenshot-item img').forEach(img => {
             const baseFile = img.getAttribute('data-base');
             if (baseFile) {
-                // Use a relative path from the index.html root
-                img.src = `images/${lang}/${baseFile}`;
+                const version = "1.3.0";
+                // Using ./ to ensure it stays relative to the current directory
+                img.src = `./images/${lang}/${baseFile}?v=${version}`;
 
-                // Optional: Fallback to 'en' if the localized image fails to load
+                // Fallback to 'en' if the localized image fails to load
                 img.onerror = function() {
                     if (lang !== 'en') {
-                        this.src = `images/en/${baseFile}`;
+                        this.src = `./images/en/${baseFile}?v=${version}`;
                     }
-                    this.onerror = null; // Prevent infinite loop
+                    this.onerror = null;
                 };
             }
         });
