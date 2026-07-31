@@ -3,532 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="gHP5Y5T53dOVYNh4yYXfgdl_cHYlBCI-wKQMu3W-ZTI" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Primary Meta Tags -->
     <title>Digital Garden | Smart Plant Care & AI Diagnosis</title>
-    <!-- Icons -->
+    <meta name="title" content="Digital Garden | Smart Plant Care & AI Diagnosis">
+    <meta name="description" content="Your smart botanical companion. Grow with confidence using automated care, smart reminders, and expert AI plant diagnosis.">
+    <meta name="keywords" content="plant care, ai plant diagnosis, garden app, watering reminders, plant health, botanical expert">
+    <meta name="author" content="Digital Garden Team">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pesericog6.github.io/sitoApp/">
+    <meta property="og:title" content="Digital Garden | Smart Plant Care & AI Diagnosis">
+    <meta property="og:description" content="Identify diseases instantly and manage your garden with expert AI advice. Available on Google Play.">
+    <meta property="og:image" content="https://pesericog6.github.io/sitoApp/images/ic_launcher-playstore.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pesericog6.github.io/sitoApp/">
+    <meta property="twitter:title" content="Digital Garden | Smart Plant Care & AI Diagnosis">
+    <meta property="twitter:description" content="Identify diseases instantly and manage your garden with expert AI advice. Available on Google Play.">
+    <meta property="twitter:image" content="https://pesericog6.github.io/sitoApp/images/ic_launcher-playstore.png">
+
+    <!-- Google Verification -->
+    <meta name="google-site-verification" content="gHP5Y5T53dOVYNh4yYXfgdl_cHYlBCI-wKQMu3W-ZTI" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/ic_launcher-playstore.png">
+    <link rel="apple-touch-icon" href="images/ic_launcher-playstore.png">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #2D5A27;
-            --secondary: #4CAF50;
-            --light: #F1F8E9;
-            --dark: #1B3022;
-            --text: #333;
-        }
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            color: var(--text);
-            background-color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* --- Language Selector --- */
-        .lang-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-        .lang-selector select {
-            padding: 5px 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(0,0,0,0.1);
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .lang-selector select option { color: #333; }
-
-        /* --- Header --- */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-            background: white;
-            border-radius: 22px;
-            padding: 8px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            margin-bottom: 20px;
-        }
-
-        h1 { font-size: clamp(2.2rem, 5vw, 3rem); margin: 10px 0; }
-        .subtitle { font-size: 1.1rem; opacity: 0.95; margin-bottom: 30px; max-width: 700px; margin: 0 auto 30px auto; }
-        
-        .play-store-badge {
-            display: inline-block;
-            background: #000;
-            color: white;
-            padding: 14px 28px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-        .play-store-badge:hover { transform: scale(1.05); }
-
-        /* --- Features Grid --- */
-        .features-section { padding: 60px 0; }
-        .features-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-        }
-        .feature-card {
-            flex: 1 1 300px;
-            max-width: 350px;
-            text-align: center;
-            padding: 40px 25px;
-            background: var(--light);
-            border-radius: 28px;
-            transition: transform 0.3s ease;
-        }
-        .feature-card:hover { transform: translateY(-5px); }
-        .feature-card i { font-size: 2.8rem; color: var(--primary); margin-bottom: 20px; }
-        .feature-card h3 { margin-bottom: 12px; color: var(--dark); }
-
-        /* --- Carousel Section --- */
-        .screenshots-section {
-            background-color: #f9fbf7;
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .slider-wrapper {
-            position: relative;
-            margin: 40px auto 0 auto;
-            max-width: 100%;
-            width: 1000px;
-            display: flex;
-            align-items: center;
-        }
-
-        .screenshot-container {
-            display: flex;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            gap: 30px;
-            padding: 20px 0 40px 0;
-            width: 100%;
-            scrollbar-width: none;
-        }
-        .screenshot-container::-webkit-scrollbar { display: none; }
-
-        .screenshot-item {
-            flex-shrink: 0;
-            width: 280px;
-            scroll-snap-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .screenshot-item img {
-            height: 520px;
-            width: auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 4px solid white;
-            margin-bottom: 15px;
-        }
-
-        .screenshot-caption {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--primary);
-            max-width: 240px;
-        }
-
-        /* Arrows */
-        .nav-btn {
-            position: absolute;
-            top: 45%;
-            transform: translateY(-50%);
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: background 0.2s, transform 0.2s;
-        }
-        .nav-btn:hover { background: var(--secondary); transform: translateY(-50%) scale(1.1); }
-        .nav-btn:active { transform: translateY(-50%) scale(0.9); }
-        
-        .nav-btn.left { left: 10px; }
-        .nav-btn.right { right: 10px; }
-
-        @media (min-width: 1150px) {
-            .nav-btn.left { left: -60px; }
-            .nav-btn.right { right: -60px; }
-        }
-
-        @media (max-width: 768px) {
-            .screenshot-container img { height: 420px; }
-            .screenshot-item { width: 220px; }
-            .nav-btn {
-                width: 38px;
-                height: 38px;
-                background: rgba(45, 90, 39, 0.8);
-            }
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-        footer a { color: #A5D6A7; text-decoration: none; margin: 0 15px; font-weight: 500; }
-        footer a:hover { text-decoration: underline; }
-    </style>
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css?v=1.3.0">
 </head>
 <body>
 
-<div class="lang-selector">
-    <select id="languageSelect" onchange="changeLanguage(this.value)">
-        <option value="en">EN</option>
-        <option value="it">IT</option>
-        <option value="fr">FR</option>
-        <option value="de">DE</option>
-        <option value="es">ES</option>
-    </select>
-</div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<header>
-    <div class="container">
-        <img src="images/ic_launcher-playstore.png" alt="Digital Garden Logo" class="logo" onerror="this.src='https://img.icons8.com/color/144/potted-plant.png'">
-        <h1 data-t="header_title">Digital Garden</h1>
-        <p class="subtitle" data-t="header_subtitle">Your smart botanical companion. Grow with confidence using automated care and expert AI diagnosis.</p>
-        <a href="https://play.google.com/store/apps/details?id=com.digitalgarden" class="play-store-badge">
-            <i class="fab fa-google-play"></i> <span data-t="get_it_google_play">Get it on Google Play</span>
-        </a>
+    <div class="lang-selector" role="region" aria-label="Language selection">
+        <select id="languageSelect" onchange="changeLanguage(this.value)" aria-label="Select Language">
+            <option value="en">EN</option>
+            <option value="it">IT</option>
+            <option value="fr">FR</option>
+            <option value="de">DE</option>
+            <option value="es">ES</option>
+        </select>
     </div>
-</header>
 
-<section class="container features-section">
-    <div class="features-grid">
-        <div class="feature-card">
-            <i class="fas fa-droplet"></i>
-            <h3 data-t="feature_reminders_title">Smart Reminders</h3>
-            <p data-t="feature_reminders_desc">Custom schedules for watering and fertilizing tailored to your specific plant species.</p>
+    <header role="banner">
+        <div class="container">
+            <img src="images/ic_launcher-playstore.png" alt="Digital Garden App Logo" class="logo" loading="eager">
+            <h1 data-t="header_title">Digital Garden</h1>
+            <p class="subtitle" data-t="header_subtitle">Your smart botanical companion. Grow with confidence using automated care and expert AI diagnosis.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.digitalgarden" class="play-store-badge" target="_blank" rel="noopener">
+                <i class="fab fa-google-play" aria-hidden="true"></i>
+                <span data-t="get_it_google_play">Get it on Google Play</span>
+            </a>
         </div>
-        <div class="feature-card">
-            <i class="fas fa-wand-magic-sparkles"></i>
-            <h3 data-t="feature_ai_title">AI Health Expert</h3>
-            <p data-t="feature_ai_desc">Identify plant diseases instantly by taking a photo. Get professional advice from our AI.</p>
-        </div>
-        <div class="feature-card">
-            <i class="fas fa-book-open"></i>
-            <h3 data-t="feature_database_title">Rich Database</h3>
-            <p data-t="feature_database_desc">Detailed care hints including soil types, light requirements, and pot sizing.</p>
-        </div>
-    </div>
-</section>
+    </header>
 
-<section class="screenshots-section">
-    <div class="container">
-        <h2 data-t="screenshots_title">Discover many other functionalities</h2>
-        <p data-t="screenshots_subtitle">Explore the intuitive interface and advanced features designed to help your garden thrive.</p>
-        
-        <div class="slider-wrapper">
-            <button class="nav-btn left" onclick="scrollSlider(-1)" aria-label="Previous image">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            
-            <div class="screenshot-container" id="screenshotSlider">
-                <div class="screenshot-item">
-                    <img src="images/en/garden_list_view.png" data-base="garden_list_view.png" alt="Garden View">
-                    <div class="screenshot-caption" data-t="cap_garden_list">Manage all your plants in one place</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/add_plant_view.png" data-base="add_plant_view.png" alt="Add Plant">
-                    <div class="screenshot-caption" data-t="cap_add_plant">Quick and easy onboarding for new species</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/plant_detail_view.png" data-base="plant_detail_view.png" alt="Plant Details">
-                    <div class="screenshot-caption" data-t="cap_plant_detail">Complete overview of your plant's status</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/ai_help_view.png" data-base="ai_help_view.png" alt="AI Help">
-                    <div class="screenshot-caption" data-t="cap_ai_help">Chat with your botanical AI Expert</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/recognition.png" data-base="recognition.png" alt="Recognition">
-                    <div class="screenshot-caption" data-t="cap_recognition">Instant species identification from photos</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/daily_schedule.png" data-base="daily_schedule.png" alt="Daily Schedule">
-                    <div class="screenshot-caption" data-t="cap_schedule">Daily care task organizer</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/additional_hints_view1.png" data-base="additional_hints_view1.png" alt="Hints 1">
-                    <div class="screenshot-caption" data-t="cap_hints_1">Expert guidance on soil composition</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/additional_hints_view2.png" data-base="additional_hints_view2.png" alt="Hints 2">
-                    <div class="screenshot-caption" data-t="cap_hints_2">Optimizing light conditions for growth</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/additional_hints_view3.png" data-base="additional_hints_view3.png" alt="Hints 3">
-                    <div class="screenshot-caption" data-t="cap_hints_3">Watering and pruning techniques</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/theme_personalization.png" data-base="theme_personalization.png" alt="Theme">
-                    <div class="screenshot-caption" data-t="cap_theme">Customizable icon bundles</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/theme_color_personalization.png" data-base="theme_color_personalization.png" alt="Colors">
-                    <div class="screenshot-caption" data-t="cap_colors">Personalize app colors to your style</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/back_up.png" data-base="back_up.png" alt="Backup">
-                    <div class="screenshot-caption" data-t="cap_backup">Secure cloud and local backup support</div>
-                </div>
-                <div class="screenshot-item">
-                    <img src="images/en/multi_language.png" data-base="multi_language.png" alt="Languages">
-                    <div class="screenshot-caption" data-t="cap_languages">Support for multiple languages</div>
+    <main id="main-content">
+        <section class="container features-section" aria-label="App Features">
+            <div class="features-grid">
+                <article class="feature-card">
+                    <i class="fas fa-droplet" aria-hidden="true"></i>
+                    <h3 data-t="feature_reminders_title">Smart Reminders</h3>
+                    <p data-t="feature_reminders_desc">Custom schedules for watering and fertilizing tailored to your specific plant species.</p>
+                </article>
+                <article class="feature-card">
+                    <i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
+                    <h3 data-t="feature_ai_title">AI Health Expert</h3>
+                    <p data-t="feature_ai_desc">Identify plant diseases instantly by taking a photo. Get professional advice from our AI.</p>
+                </article>
+                <article class="feature-card">
+                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                    <h3 data-t="feature_database_title">Rich Database</h3>
+                    <p data-t="feature_database_desc">Detailed care hints including soil types, light requirements, and pot sizing.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="screenshots-section" aria-label="App Screenshots">
+            <div class="container">
+                <h2 data-t="screenshots_title">Discover many other functionalities</h2>
+                <p data-t="screenshots_subtitle">Explore the intuitive interface and advanced features designed to help your garden thrive.</p>
+
+                <div class="slider-wrapper">
+                    <button class="nav-btn left" onclick="scrollSlider(-1)" aria-label="Previous screenshot">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="screenshot-container" id="screenshotSlider" role="list">
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/garden_list_view.png" data-base="garden_list_view.png" alt="My Garden main view" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_garden_list">Manage all your plants in one place</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/add_plant_view.png" data-base="add_plant_view.png" alt="Adding a new plant" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_add_plant">Quick and easy onboarding for new species</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/plant_detail_view.png" data-base="plant_detail_view.png" alt="Detailed plant care status" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_plant_detail">Complete overview of your plant's status</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/ai_help_view.png" data-base="ai_help_view.png" alt="AI chat interface" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_ai_help">Chat with your botanical AI Expert</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/recognition.png" data-base="recognition.png" alt="Plant recognition from photo" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_recognition">Instant species identification from photos</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/daily_schedule.png" data-base="daily_schedule.png" alt="Daily care schedule" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_schedule">Daily care task organizer</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/additional_hints_view1.png" data-base="additional_hints_view1.png" alt="Soil composition advice" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_hints_1">Expert guidance on soil composition</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/additional_hints_view2.png" data-base="additional_hints_view2.png" alt="Light requirements overview" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_hints_2">Optimizing light conditions for growth</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/additional_hints_view3.png" data-base="additional_hints_view3.png" alt="Watering guidance" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_hints_3">Watering and pruning techniques</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/theme_personalization.png" data-base="theme_personalization.png" alt="Icon customization settings" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_theme">Customizable icon bundles</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/theme_color_personalization.png" data-base="theme_color_personalization.png" alt="Color palette picker" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_colors">Personalize app colors to your style</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/back_up.png" data-base="back_up.png" alt="Backup and restore settings" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_backup">Secure cloud and local backup support</div>
+                        </div>
+                        <div class="screenshot-item" role="listitem">
+                            <img src="images/en/multi_language.png" data-base="multi_language.png" alt="Language support settings" loading="lazy">
+                            <div class="screenshot-caption" data-t="cap_languages">Support for multiple languages</div>
+                        </div>
+                    </div>
+
+                    <button class="nav-btn right" onclick="scrollSlider(1)" aria-label="Next screenshot">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
-            
-            <button class="nav-btn right" onclick="scrollSlider(1)" aria-label="Next image">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <nav aria-label="Footer Navigation">
+                <a href="privacy.html" data-t="privacy_policy">Privacy Policy</a>
+                <a href="mailto:feedback@digitalgardensupport.com" data-t="support">Support</a>
+            </nav>
+            <p class="copyright">&copy; 2026 Digital Garden. All rights reserved.</p>
         </div>
-    </div>
-</section>
+    </footer>
 
-<footer>
-    <div class="container">
-        <p>&copy; 2026 Digital Garden. All rights reserved.</p>
-        <p>
-            <a href="privacy.html" data-t="privacy_policy">Privacy Policy</a>
-            <a href="mailto:feedback@digitalgardensupport.com" data-t="support">Support</a>
-        </p>
-    </div>
-</footer>
-
-<script>
-    const translations = {
-        en: {
-            header_title: "Digital Garden",
-            header_subtitle: "Your smart botanical companion. Grow with confidence using automated care and expert AI diagnosis.",
-            get_it_google_play: "Get it on Google Play",
-            feature_reminders_title: "Smart Reminders",
-            feature_reminders_desc: "Custom schedules for watering and fertilizing tailored to your specific plant species.",
-            feature_ai_title: "AI Health Expert",
-            feature_ai_desc: "Identify plant diseases instantly by taking a photo. Get professional advice from our AI.",
-            feature_database_title: "Rich Database",
-            feature_database_desc: "Detailed care hints including soil types, light requirements, and pot sizing.",
-            screenshots_title: "Discover many other functionalities",
-            screenshots_subtitle: "Explore the intuitive interface and advanced features designed to help your garden thrive.",
-            cap_garden_list: "Manage all your plants in one place",
-            cap_add_plant: "Quick and easy onboarding for new species",
-            cap_plant_detail: "Complete overview of your plant's status",
-            cap_ai_help: "Chat with your botanical AI Expert",
-            cap_recognition: "Instant species identification from photos",
-            cap_schedule: "Daily care task organizer",
-            cap_hints_1: "Expert guidance on soil composition",
-            cap_hints_2: "Optimizing light conditions for growth",
-            cap_hints_3: "Watering and pruning techniques",
-            cap_theme: "Customizable icon bundles",
-            cap_colors: "Personalize app colors to your style",
-            cap_backup: "Secure cloud and local backup support",
-            cap_languages: "Support for multiple languages",
-            privacy_policy: "Privacy Policy",
-            support: "Support"
-        },
-        it: {
-            header_title: "Digital Garden",
-            header_subtitle: "Il tuo compagno botanico intelligente. Coltiva con fiducia grazie alle cure automatizzate e alla diagnosi esperta dell'IA.",
-            get_it_google_play: "Scarica su Google Play",
-            feature_reminders_title: "Promemoria Intelligenti",
-            feature_reminders_desc: "Programmi personalizzati per l'irrigazione e la concimazione adatti alle tue specifiche piante.",
-            feature_ai_title: "Esperto AI per la Salute",
-            feature_ai_desc: "Identifica le malattie delle piante istantaneamente con una foto. Ricevi consigli professionali dalla nostra IA.",
-            feature_database_title: "Ampio Database",
-            feature_database_desc: "Consigli dettagliati sulla cura, inclusi tipi di terreno, requisiti di luce e dimensioni del vaso.",
-            screenshots_title: "Scopri molte altre funzionalità",
-            screenshots_subtitle: "Esplora l'interfaccia intuitiva e le funzioni avanzate progettate per far fiorire il tuo giardino.",
-            cap_garden_list: "Gestisci tutte le tue piante in un unico posto",
-            cap_add_plant: "Inserimento rapido e facile di nuove specie",
-            cap_plant_detail: "Panoramica completa dello stato della tua pianta",
-            cap_ai_help: "Chatta con il tuo Esperto AI botanico",
-            cap_recognition: "Identificazione istantanea delle specie dalle foto",
-            cap_schedule: "Organizzatore giornaliero delle attività di cura",
-            cap_hints_1: "Guida esperta sulla composizione del terreno",
-            cap_hints_2: "Ottimizzazione delle condizioni di luce per la crescita",
-            cap_hints_3: "Tecniche di irrigazione e potatura",
-            cap_theme: "Pacchetti di icone personalizzabili",
-            cap_colors: "Personalizza i colori dell'app secondo il tuo stile",
-            cap_backup: "Supporto backup sicuro su cloud e locale",
-            cap_languages: "Supporto per più lingue",
-            privacy_policy: "Informativa sulla Privacy",
-            support: "Supporto"
-        },
-        fr: {
-            header_title: "Digital Garden",
-            header_subtitle: "Votre compagnon botanique intelligent. Cultivez en toute confiance grâce aux soins automatisés et au diagnostic expert de l'IA.",
-            get_it_google_play: "Disponible sur Google Play",
-            feature_reminders_title: "Rappels Intelligents",
-            feature_reminders_desc: "Des calendriers personnalisés pour l'arrosage et la fertilisation adaptés à vos espèces de plantes.",
-            feature_ai_title: "Expert Santé IA",
-            feature_ai_desc: "Identifiez instantanément les maladies des plantes avec une photo. Obtenez des conseils professionnels de notre IA.",
-            feature_database_title: "Base de Données Riche",
-            feature_database_desc: "Conseils de soins détaillés incluant les types de sol, les besoins en lumière et la taille des pots.",
-            screenshots_title: "Découvrez de nombreuses autres fonctionnalités",
-            screenshots_subtitle: "Explorez l'interface intuitive et les fonctionnalités avancées conçues pour aider votre jardin à s'épanouir.",
-            cap_garden_list: "Gérez toutes vos plantes en un seul endroit",
-            cap_add_plant: "Ajout rapide et facile de nouvelles espèces",
-            cap_plant_detail: "Aperçu complet de l'état de votre plante",
-            cap_ai_help: "Discutez avec votre expert botanique IA",
-            cap_recognition: "Identification instantanée des espèces à partir de photos",
-            cap_schedule: "Organisateur quotidien des tâches d'entretien",
-            cap_hints_1: "Conseils d'experts sur la composition du sol",
-            cap_hints_2: "Optimisation des conditions lumineuses pour la croissance",
-            cap_hints_3: "Techniques d'arrosage et de taille",
-            cap_theme: "Packs d'icônes personnalisables",
-            cap_colors: "Personnalisez les couleurs de l'application",
-            cap_backup: "Prise en charge de la sauvegarde cloud et locale",
-            cap_languages: "Support de plusieurs langues",
-            privacy_policy: "Politique de Confidentialité",
-            support: "Support"
-        },
-        de: {
-            header_title: "Digital Garden",
-            header_subtitle: "Ihr smarter botanischer Begleiter. Züchten Sie mit Vertrauen dank automatisierter Pflege und Experten-KI-Diagnose.",
-            get_it_google_play: "Jetzt bei Google Play",
-            feature_reminders_title: "Smarte Erinnerungen",
-            feature_reminders_desc: "Individuelle Pläne für Bewässerung und Düngung, zugeschnitten auf Ihre spezifischen Pflanzenarten.",
-            feature_ai_title: "KI-Gesundheitsexperte",
-            feature_ai_desc: "Identifizieren Sie Pflanzenkrankheiten sofort mit einem Foto. Erhalten Sie professionelle Beratung von unserer KI.",
-            feature_database_title: "Umfangreiche Datenbank",
-            feature_database_desc: "Detaillierte Pflegehinweise einschließlich Bodenarten, Lichtanforderungen und Topfgrößen.",
-            screenshots_title: "Entdecken Sie viele weitere Funktionen",
-            screenshots_subtitle: "Erkunden Sie die intuitive Benutzeroberfläche und die erweiterten Funktionen für Ihren Garten.",
-            cap_garden_list: "Verwalten Sie alle Ihre Pflanzen an einem Ort",
-            cap_add_plant: "Schnelle und einfache Aufnahme neuer Arten",
-            cap_plant_detail: "Vollständiger Überblick über den Status Ihrer Pflanze",
-            cap_ai_help: "Chatten Sie mit Ihrem botanischen KI-Experten",
-            cap_recognition: "Sofortige Artenbestimmung anhand von Fotos",
-            cap_schedule: "Täglicher Organizer für Pflegeaufgaben",
-            cap_hints_1: "Expertenberatung zur Bodenzusammensetzung",
-            cap_hints_2: "Optimierung der Lichtverhältnisse für das Wachstum",
-            cap_hints_3: "Bewässerungs- und Schnitttechniken",
-            cap_theme: "Anpassbare Symbolpakete",
-            cap_colors: "Personalisieren Sie die App-Farben",
-            cap_backup: "Sichere Cloud- und lokale Backup-Unterstützung",
-            cap_languages: "Unterstützung für mehrere Sprachen",
-            privacy_policy: "Datenschutzerklärung",
-            support: "Support"
-        },
-        es: {
-            header_title: "Digital Garden",
-            header_subtitle: "Tu compañero botánico inteligente. Cultiva con confianza mediante cuidados automatizados y diagnóstico experto por IA.",
-            get_it_google_play: "Disponible en Google Play",
-            feature_reminders_title: "Recordatorios Inteligentes",
-            feature_reminders_desc: "Programas personalizados para riego y fertilización adaptados a tus especies de plantas.",
-            feature_ai_title: "Experto en Salud IA",
-            feature_ai_desc: "Identifica enfermedades de las plantas al instante con una foto. Obtén consejos profesionales de nuestra IA.",
-            feature_database_title: "Base de Datos Rica",
-            feature_database_desc: "Consejos detallados que incluyen tipos de suelo, requisitos de luz y tamaño de maceta.",
-            screenshots_title: "Descubre muchas otras funcionalidades",
-            screenshots_subtitle: "Explora la interfaz intuitiva y las funciones avanzadas diseñadas para que tu jardín prospere.",
-            cap_garden_list: "Gestiona todas tus plantas en un solo lugar",
-            cap_add_plant: "Incorporación rápida y fácil de nuevas especies",
-            cap_plant_detail: "Resumen completo del estado de tu planta",
-            cap_ai_help: "Chatea con tu experto botánico por IA",
-            cap_recognition: "Identificación instantánea de especies mediante fotos",
-            cap_schedule: "Organizador diario de tareas de cuidado",
-            cap_hints_1: "Guía experta sobre la composición del suelo",
-            cap_hints_2: "Optimización de la luz para el crecimiento",
-            cap_hints_3: "Técnicas de riego y poda",
-            cap_theme: "Paquetes de iconos personalizables",
-            cap_colors: "Personaliza los colores de la aplicación",
-            cap_backup: "Soporte de copia de seguridad local y en la nube",
-            cap_languages: "Soporte para varios idiomas",
-            privacy_policy: "Política de Privacidad",
-            support: "Soporte"
-        }
-    };
-
-    function changeLanguage(lang) {
-        document.querySelectorAll('[data-t]').forEach(el => {
-            const key = el.getAttribute('data-t');
-            if (translations[lang][key]) {
-                el.innerText = translations[lang][key];
-            }
-        });
-
-        // Update screenshots path robustly with cache busting
-        document.querySelectorAll('.screenshot-item img').forEach(img => {
-            const baseFile = img.getAttribute('data-base');
-            if (baseFile) {
-                const version = "1.3.0";
-                // Using ./ to ensure it stays relative to the current directory
-                img.src = `./images/${lang}/${baseFile}?v=${version}`;
-
-                // Fallback to 'en' if the localized image fails to load
-                img.onerror = function() {
-                    if (lang !== 'en') {
-                        this.src = `./images/en/${baseFile}?v=${version}`;
-                    }
-                    this.onerror = null;
-                };
-            }
-        });
-
-        document.documentElement.lang = lang;
-        localStorage.setItem('preferredLang', lang);
-    }
-
-    // Auto-detect browser language
-    window.onload = () => {
-        const savedLang = localStorage.getItem('preferredLang');
-        const browserLang = navigator.language.split('-')[0];
-        const initialLang = savedLang || (translations[browserLang] ? browserLang : 'en');
-
-        document.getElementById('languageSelect').value = initialLang;
-        changeLanguage(initialLang);
-    };
-
-    function scrollSlider(direction) {
-        const slider = document.getElementById('screenshotSlider');
-        if (!slider) return;
-        const scrollAmount = slider.clientWidth * 0.8;
-        slider.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth'
-        });
-    }
-</script>
-
+    <!-- Main JavaScript -->
+    <script src="js/main.js?v=1.3.0"></script>
 </body>
 </html>
