@@ -420,16 +420,36 @@ function initSliderDots() {
 
 // Initialization on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Determine initial language
+    // 1. Determine initial language (URL Param -> LocalStorage -> Browser -> Default)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLang = urlParams.get('lang');
+
     const savedLang = storage.get('preferredLang');
     const browserLang = navigator.language.split('-')[0];
-    const initialLang = savedLang || (TRANSLATIONS[browserLang] ? browserLang : CONFIG.DEFAULT_LANG);
+
+    let initialLang = CONFIG.DEFAULT_LANG;
+
+    if (urlLang && CONFIG.SUPPORTED_LANGS.includes(urlLang)) {
+        initialLang = urlLang;
+    } else if (savedLang && CONFIG.SUPPORTED_LANGS.includes(savedLang)) {
+        initialLang = savedLang;
+    } else if (CONFIG.SUPPORTED_LANGS.includes(browserLang)) {
+        initialLang = browserLang;
+    }
 
     // 2. Set the select dropdown value and listener
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.value = initialLang;
-        langSelect.addEventListener('change', (e) => changeLanguage(e.target.value));
+        langSelect.addEventListener('change', (e) => {
+            const newLang = e.target.value;
+            // Update URL without reloading (optional, but professional)
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('lang', newLang);
+            window.history.pushState({}, '', newUrl);
+
+            changeLanguage(newLang);
+        });
     }
 
     // 3. Slider Button Listeners
