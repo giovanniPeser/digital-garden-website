@@ -1,0 +1,9 @@
+{
+  "name": "digital-garden-web-updater",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Automated stats updater for Digital Garden",
+  "dependencies": {
+    "google-play-scraper": "^9.4.1"
+  }
+}
