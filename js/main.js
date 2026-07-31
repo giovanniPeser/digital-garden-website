@@ -51,7 +51,13 @@ const TRANSLATIONS = {
         cta_bottom_title: 'Ready to start your digital garden?',
         cta_bottom_subtitle: 'Join thousands of plant lovers and give your plants the care they deserve.',
         privacy_policy: 'Privacy Policy',
-        support: 'Support'
+        support: 'Support',
+        aria_prev_screenshot: 'Previous screenshot',
+        aria_next_screenshot: 'Next screenshot',
+        aria_select_language: 'Select Language',
+        aria_dot_nav: 'Go to screenshot ',
+        app_rating: '4.8/5 Rating',
+        app_downloads: '1,000+ Downloads'
     },
     it: {
         header_title: 'Digital Garden',
@@ -81,7 +87,13 @@ const TRANSLATIONS = {
         cta_bottom_title: 'Pronto a iniziare il tuo giardino digitale?',
         cta_bottom_subtitle: 'Unisciti a migliaia di amanti delle piante e dai alle tue piante la cura che meritano.',
         privacy_policy: 'Informativa sulla Privacy',
-        support: 'Supporto'
+        support: 'Supporto',
+        aria_prev_screenshot: 'Screenshot precedente',
+        aria_next_screenshot: 'Screenshot successivo',
+        aria_select_language: 'Seleziona lingua',
+        aria_dot_nav: 'Vai allo screenshot ',
+        app_rating: 'Valutazione 4.8/5',
+        app_downloads: '1.000+ Download'
     },
     fr: {
         header_title: 'Digital Garden',
@@ -111,7 +123,13 @@ const TRANSLATIONS = {
         cta_bottom_title: 'Prêt à commencer votre jardin numérique ?',
         cta_bottom_subtitle: 'Rejoignez des milliers de passionnés de plantes et offrez à vos plantes les soins qu\'elles méritent.',
         privacy_policy: 'Politique de Confidentialité',
-        support: 'Support'
+        support: 'Support',
+        aria_prev_screenshot: 'Capture d\'écran précédente',
+        aria_next_screenshot: 'Capture d\'écran suivante',
+        aria_select_language: 'Choisir la langue',
+        aria_dot_nav: 'Aller à la capture d\'écran ',
+        app_rating: 'Note 4.8/5',
+        app_downloads: '1 000+ Téléchargements'
     },
     de: {
         header_title: 'Digital Garden',
@@ -141,7 +159,13 @@ const TRANSLATIONS = {
         cta_bottom_title: 'Bereit für Ihren digitalen Garten?',
         cta_bottom_subtitle: 'Schließen Sie sich Tausenden von Pflanzenliebhabern an und geben Sie Ihren Pflanzen die Pflege, die sie verdienen.',
         privacy_policy: 'Datenschutzerklärung',
-        support: 'Support'
+        support: 'Support',
+        aria_prev_screenshot: 'Vorheriger Screenshot',
+        aria_next_screenshot: 'Nächster Screenshot',
+        aria_select_language: 'Sprache wählen',
+        aria_dot_nav: 'Gehe zu Screenshot ',
+        app_rating: 'Bewertung 4.8/5',
+        app_downloads: '1.000+ Downloads'
     },
     es: {
         header_title: 'Digital Garden',
@@ -149,9 +173,9 @@ const TRANSLATIONS = {
         get_it_google_play: 'Disponible en Google Play',
         feature_reminders_title: 'Recordatorios Inteligentes',
         feature_reminders_desc: 'Programas personalizados para riego y fertilización adaptados a tus especies de plantas.',
-        feature_ai_title: 'Experto en Salud IA',
+        feature_ai_title: 'AI Health Expert',
         feature_ai_desc: 'Identifica enfermedades de las plantas al instante con una foto. Obtén consejos profesionales de nuestra IA.',
-        feature_database_title: 'Base de Datos Rica',
+        feature_database_title: 'Rich Database',
         feature_database_desc: 'Consejos detallados que incluyen tipos de suelo, requisitos de luz y tamaño de maceta.',
         screenshots_title: 'Descubre muchas otras funcionalidades',
         screenshots_subtitle: 'Explora la interfaz intuitiva y las funciones avanzadas diseñadas para que tu jardín prospere.',
@@ -171,7 +195,42 @@ const TRANSLATIONS = {
         cta_bottom_title: '¿Listo para empezar tu jardín digital?',
         cta_bottom_subtitle: 'Únete a miles de amantes de las plantas y dales a tus plantas el cuidado que merecen.',
         privacy_policy: 'Política de Privacidad',
-        support: 'Soporte'
+        support: 'Soporte',
+        aria_prev_screenshot: 'Captura de pantalla anterior',
+        aria_next_screenshot: 'Siguiente captura de pantalla',
+        aria_select_language: 'Seleccionar idioma',
+        aria_dot_nav: 'Ir a la captura de pantalla ',
+        app_rating: 'Calificación 4.8/5',
+        app_downloads: '1.000+ Descargas'
+    }
+};
+
+/**
+ * Safely accesses localStorage with a fallback.
+ * @return {!Object}
+ */
+const storage = {
+    /**
+     * @param {string} key
+     * @return {?string}
+     */
+    get(key) {
+        try {
+            return localStorage.getItem(key);
+        } catch (e) {
+            return null;
+        }
+    },
+    /**
+     * @param {string} key
+     * @param {string} value
+     */
+    set(key, value) {
+        try {
+            localStorage.setItem(key, value);
+        } catch (e) {
+            // Silently fail
+        }
     }
 };
 
@@ -214,6 +273,20 @@ function updatePageContent(lang) {
         }
     });
 
+    // Update Accessibility Labels
+    const langSelect = document.getElementById('languageSelect');
+    if (langSelect) langSelect.setAttribute('aria-label', translation.aria_select_language);
+
+    const btnLeft = document.getElementById('sliderBtnLeft');
+    if (btnLeft) btnLeft.setAttribute('aria-label', translation.aria_prev_screenshot);
+
+    const btnRight = document.getElementById('sliderBtnRight');
+    if (btnRight) btnRight.setAttribute('aria-label', translation.aria_next_screenshot);
+
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.setAttribute('aria-label', translation.aria_dot_nav + (index + 1));
+    });
+
     // Update HTML lang attribute
     document.documentElement.lang = lang;
 
@@ -223,7 +296,8 @@ function updatePageContent(lang) {
 
 /**
  * Updates screenshot image paths with localized versions and cache busting.
- * Supports WebP with PNG fallback.
+ * Currently supports PNG only as repo only contains PNGs.
+ * Logic kept simple to avoid redundant network failures.
  * @param {string} lang Language code.
  */
 function updateScreenshots(lang) {
@@ -231,35 +305,22 @@ function updateScreenshots(lang) {
         const baseFile = img.getAttribute('data-base');
         if (!baseFile) return;
 
-        const filenameNoExt = baseFile.split('.').slice(0, -1).join('.');
         const version = CONFIG.VERSION;
 
-        /**
-         * Recursively tries to load images in order: Local WebP -> PNG -> English WebP -> PNG.
-         * @param {string} targetLang The language folder to look in.
-         * @param {boolean} useWebP Whether to try loading the WebP version.
-         */
-        const tryLoad = (targetLang, useWebP) => {
-            const ext = useWebP ? 'webp' : 'png';
-            const newSrc = `${CONFIG.IMAGE_PATH}/${targetLang}/${filenameNoExt}.${ext}?v=${version}`;
+        // Directly try localized PNG
+        const trySrc = `${CONFIG.IMAGE_PATH}/${lang}/${baseFile}?v=${version}`;
 
-            const tempImg = new Image();
-            tempImg.onload = () => {
-                img.src = newSrc;
-            };
-            tempImg.onerror = () => {
-                if (useWebP) {
-                    // Try PNG for same lang
-                    tryLoad(targetLang, false);
-                } else if (targetLang !== CONFIG.DEFAULT_LANG) {
-                    // Try WebP for default lang
-                    tryLoad(CONFIG.DEFAULT_LANG, true);
-                }
-            };
-            tempImg.src = newSrc;
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            img.src = trySrc;
         };
-
-        tryLoad(lang, true);
+        tempImg.onerror = () => {
+            if (lang !== CONFIG.DEFAULT_LANG) {
+                // Fallback to English PNG
+                img.src = `${CONFIG.IMAGE_PATH}/${CONFIG.DEFAULT_LANG}/${baseFile}?v=${version}`;
+            }
+        };
+        tempImg.src = trySrc;
     });
 }
 
@@ -274,7 +335,7 @@ function changeLanguage(lang) {
 
     updatePageContent(lang);
     updateScreenshots(lang);
-    localStorage.setItem('preferredLang', lang);
+    storage.set('preferredLang', lang);
 }
 
 /**
@@ -299,7 +360,7 @@ function initScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             // Header is special-cased to animate on load.
-            if (entries[0].target.tagName === 'HEADER') {
+            if (entry.target.tagName === 'HEADER') {
                  entry.target.classList.add('active');
                  return;
             }
@@ -321,11 +382,13 @@ function initSliderDots() {
     const items = document.querySelectorAll('.screenshot-item');
     if (!slider || !dotsContainer) return;
 
-    // Create dots
+    // Create dots as button elements for accessibility
     items.forEach((_, index) => {
-        const dot = document.createElement('div');
+        const dot = document.createElement('button');
+        dot.type = 'button';
         dot.classList.add('dot');
         if (index === 0) dot.classList.add('active');
+
         dot.addEventListener('click', () => {
             slider.scrollTo({
                 left: items[index].offsetLeft - slider.offsetLeft,
@@ -347,7 +410,7 @@ function initSliderDots() {
 // Initialization on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Determine initial language
-    const savedLang = localStorage.getItem('preferredLang');
+    const savedLang = storage.get('preferredLang');
     const browserLang = navigator.language.split('-')[0];
     const initialLang = savedLang || (TRANSLATIONS[browserLang] ? browserLang : CONFIG.DEFAULT_LANG);
 
