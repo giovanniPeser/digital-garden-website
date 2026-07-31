@@ -15,7 +15,12 @@ const CONFIG = {
     VERSION: '1.3.0',
     DEFAULT_LANG: 'en',
     SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es'],
-    IMAGE_PATH: './images'
+    IMAGE_PATH: './images',
+    // 💡 UPDATE THESE STATS from Play Console before every release
+    STATS: {
+        RATING: '4.8/5',
+        DOWNLOADS: '1,000+'
+    }
 };
 
 /**
@@ -56,8 +61,8 @@ const TRANSLATIONS = {
         aria_next_screenshot: 'Next screenshot',
         aria_select_language: 'Select Language',
         aria_dot_nav: 'Go to screenshot ',
-        app_rating: '4.8/5 Rating',
-        app_downloads: '1,000+ Downloads'
+        app_rating: '{{rating}} Rating',
+        app_downloads: '{{downloads}} Downloads'
     },
     it: {
         header_title: 'Digital Garden',
@@ -92,8 +97,8 @@ const TRANSLATIONS = {
         aria_next_screenshot: 'Screenshot successivo',
         aria_select_language: 'Seleziona lingua',
         aria_dot_nav: 'Vai allo screenshot ',
-        app_rating: 'Valutazione 4.8/5',
-        app_downloads: '1.000+ Download'
+        app_rating: 'Valutazione {{rating}}',
+        app_downloads: '{{downloads}} Download'
     },
     fr: {
         header_title: 'Digital Garden',
@@ -128,8 +133,8 @@ const TRANSLATIONS = {
         aria_next_screenshot: 'Capture d\'écran suivante',
         aria_select_language: 'Choisir la langue',
         aria_dot_nav: 'Aller à la capture d\'écran ',
-        app_rating: 'Note 4.8/5',
-        app_downloads: '1 000+ Téléchargements'
+        app_rating: 'Note {{rating}}',
+        app_downloads: '{{downloads}} Téléchargements'
     },
     de: {
         header_title: 'Digital Garden',
@@ -164,8 +169,8 @@ const TRANSLATIONS = {
         aria_next_screenshot: 'Nächster Screenshot',
         aria_select_language: 'Sprache wählen',
         aria_dot_nav: 'Gehe zu Screenshot ',
-        app_rating: 'Bewertung 4.8/5',
-        app_downloads: '1.000+ Downloads'
+        app_rating: 'Bewertung {{rating}}',
+        app_downloads: '{{downloads}} Downloads'
     },
     es: {
         header_title: 'Digital Garden',
@@ -200,8 +205,8 @@ const TRANSLATIONS = {
         aria_next_screenshot: 'Siguiente captura de pantalla',
         aria_select_language: 'Seleccionar idioma',
         aria_dot_nav: 'Ir a la captura de pantalla ',
-        app_rating: 'Calificación 4.8/5',
-        app_downloads: '1.000+ Descargas'
+        app_rating: 'Calificación {{rating}}',
+        app_downloads: '{{downloads}} Descargas'
     }
 };
 
@@ -264,11 +269,17 @@ function updatePageContent(lang) {
     document.querySelectorAll('[data-t]').forEach(el => {
         const key = el.getAttribute('data-t');
         if (translation[key]) {
+            let text = translation[key];
+
+            // Replace placeholders with real stats
+            text = text.replace('{{rating}}', CONFIG.STATS.RATING);
+            text = text.replace('{{downloads}}', CONFIG.STATS.DOWNLOADS);
+
             // Check if it's a value (like an input) or text
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = translation[key];
+                el.placeholder = text;
             } else {
-                el.innerText = translation[key];
+                el.innerText = text;
             }
         }
     });
