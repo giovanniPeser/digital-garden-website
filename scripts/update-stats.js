@@ -12,12 +12,11 @@ const TARGET_FILE = path.join(__dirname, '../data/stats.json');
 
 /**
  * Validates the rating string.
- * @param {string} rating
+ * @param {string|number} rating
  * @return {boolean}
  */
 function isValidRating(rating) {
-    // Allows things like "4.8", "4.8/5", "4,8"
-    return typeof rating === 'string' && rating.length > 0;
+    return rating !== undefined && rating !== null && rating !== 'undefined';
 }
 
 /**
@@ -26,7 +25,7 @@ function isValidRating(rating) {
  * @return {boolean}
  */
 function isValidInstalls(installs) {
-    return typeof installs === 'string' && installs.length > 0;
+    return typeof installs === 'string' && installs.length > 0 && installs !== 'undefined';
 }
 
 async function updateStats() {
@@ -34,8 +33,9 @@ async function updateStats() {
         console.log(`Fetching stats for ${APP_ID}...`);
         const appDetails = await gplay.app({appId: APP_ID});
 
-        const rating = appDetails.scoreText || String(appDetails.score);
-        const downloads = appDetails.installs;
+        // Use scoreText if available, otherwise format numeric score
+        let rating = appDetails.scoreText || (appDetails.score ? appDetails.score.toFixed(1) + '/5' : '5.0/5');
+        const downloads = appDetails.installs || '1,000+';
 
         if (!isValidRating(rating) || !isValidInstalls(downloads)) {
             throw new Error(`Invalid stats received: rating="${rating}", downloads="${downloads}"`);

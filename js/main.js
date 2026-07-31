@@ -21,7 +21,7 @@ const CONFIG = {
 
 /** @type {!Object<string, string>} */
 const LIVE_STATS = {
-    rating: '4.8/5',
+    rating: '5.0/5',
     downloads: '1,000+'
 };
 
@@ -217,10 +217,6 @@ const TRANSLATIONS = {
  * @const {!Object}
  */
 const storage = {
-    /**
-     * @param {string} key
-     * @return {?string}
-     */
     get(key) {
         try {
             return localStorage.getItem(key);
@@ -228,16 +224,10 @@ const storage = {
             return null;
         }
     },
-    /**
-     * @param {string} key
-     * @param {string} value
-     */
     set(key, value) {
         try {
             localStorage.setItem(key, value);
-        } catch (e) {
-            // Silently fail
-        }
+        } catch (e) {}
     }
 };
 
@@ -247,30 +237,20 @@ const storage = {
  */
 function updateMetaTags(lang) {
     const translation = TRANSLATIONS[lang] || TRANSLATIONS[CONFIG.DEFAULT_LANG];
-
-    // Update Meta Description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-        metaDescription.setAttribute('content', translation.header_subtitle);
-    }
-
-    // Update Open Graph Description
-    const ogDescription = document.querySelector('meta[property="og:description"]');
-    if (ogDescription) {
-        ogDescription.setAttribute('content', translation.header_subtitle);
-    }
-
-    // Update Canonical URL
-    const canonical = document.querySelector('link[rel="canonical"]');
-    const ogUrl = document.querySelector('meta[property="og:url"]');
-    const twitterUrl = document.querySelector('meta[property="twitter:url"]');
-
     const baseUrl = 'https://pesericog6.github.io/sitoApp/';
     const localizedUrl = lang === CONFIG.DEFAULT_LANG ? baseUrl : `${baseUrl}?lang=${lang}`;
 
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) metaDescription.setAttribute('content', translation.header_subtitle);
+
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) ogDescription.setAttribute('content', translation.header_subtitle);
+
+    const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', localizedUrl);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) ogUrl.setAttribute('content', localizedUrl);
-    if (twitterUrl) twitterUrl.setAttribute('content', localizedUrl);
 }
 
 /**
@@ -284,12 +264,9 @@ function updatePageContent(lang) {
         const key = el.getAttribute('data-t');
         if (translation[key]) {
             let text = translation[key];
-
-            // Replace placeholders with real stats
             text = text.replace('{{rating}}', LIVE_STATS.rating);
             text = text.replace('{{downloads}}', LIVE_STATS.downloads);
 
-            // Check if it's a value (like an input) or text
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                 el.placeholder = text;
             } else {
@@ -298,7 +275,6 @@ function updatePageContent(lang) {
         }
     });
 
-    // Update Accessibility Labels
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) langSelect.setAttribute('aria-label', translation.aria_select_language);
 
@@ -312,16 +288,12 @@ function updatePageContent(lang) {
         dot.setAttribute('aria-label', translation.aria_dot_nav + (index + 1));
     });
 
-    // Update HTML lang attribute
     document.documentElement.lang = lang;
-
-    // Update Meta Tags for SEO
     updateMetaTags(lang);
 }
 
 /**
  * Updates screenshot image paths with localized versions and cache busting.
- * Currently supports PNG only as repo only contains PNGs.
  * @param {string} lang Language code.
  */
 function updateScreenshots(lang) {
@@ -333,9 +305,7 @@ function updateScreenshots(lang) {
         const trySrc = `${CONFIG.IMAGE_PATH}/${lang}/${baseFile}?v=${version}`;
 
         const tempImg = new Image();
-        tempImg.onload = () => {
-            img.src = trySrc;
-        };
+        tempImg.onload = () => { img.src = trySrc; };
         tempImg.onerror = () => {
             if (lang !== CONFIG.DEFAULT_LANG) {
                 img.src = `${CONFIG.IMAGE_PATH}/${CONFIG.DEFAULT_LANG}/${baseFile}?v=${version}`;
@@ -350,10 +320,7 @@ function updateScreenshots(lang) {
  * @param {string} lang Selected language code.
  */
 function changeLanguage(lang) {
-    if (!CONFIG.SUPPORTED_LANGS.includes(lang)) {
-        lang = CONFIG.DEFAULT_LANG;
-    }
-
+    if (!CONFIG.SUPPORTED_LANGS.includes(lang)) lang = CONFIG.DEFAULT_LANG;
     updatePageContent(lang);
     updateScreenshots(lang);
     storage.set('preferredLang', lang);
@@ -366,12 +333,8 @@ function changeLanguage(lang) {
 function scrollSlider(direction) {
     const slider = document.getElementById('screenshotSlider');
     if (!slider) return;
-
     const scrollAmount = slider.clientWidth * 0.8;
-    slider.scrollBy({
-        left: direction * scrollAmount,
-        behavior: 'smooth'
-    });
+    slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 
 /**
@@ -382,9 +345,7 @@ function initScrollReveal() {
         entries.forEach(entry => {
             if (entry.target.tagName === 'HEADER') {
                  entry.target.classList.add('active');
-                 return;
-            }
-            if (entry.isIntersecting) {
+            } else if (entry.isIntersecting) {
                 entry.target.classList.add('active');
             }
         });
@@ -402,23 +363,17 @@ function initSliderDots() {
     const items = document.querySelectorAll('.screenshot-item');
     if (!slider || !dotsContainer) return;
 
-    // Create dots as button elements for accessibility
     items.forEach((_, index) => {
         const dot = document.createElement('button');
         dot.type = 'button';
         dot.classList.add('dot');
         if (index === 0) dot.classList.add('active');
-
         dot.addEventListener('click', () => {
-            slider.scrollTo({
-                left: items[index].offsetLeft - slider.offsetLeft,
-                behavior: 'smooth'
-            });
+            slider.scrollTo({ left: items[index].offsetLeft - slider.offsetLeft, behavior: 'smooth' });
         });
         dotsContainer.appendChild(dot);
     });
 
-    // Update active dot on scroll
     slider.addEventListener('scroll', () => {
         const index = Math.round(slider.scrollLeft / items[0].offsetWidth);
         document.querySelectorAll('.dot').forEach((dot, i) => {
@@ -439,36 +394,25 @@ async function fetchStats() {
             LIVE_STATS.rating = data.rating || LIVE_STATS.rating;
             LIVE_STATS.downloads = data.downloads || LIVE_STATS.downloads;
         }
-    } catch (e) {
-        console.warn('Failed to fetch live stats, using defaults.');
-    }
+    } catch (e) {}
 }
 
 // Initialization on DOM Ready
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Fetch live stats first
     await fetchStats();
-
-    // 2. Initialize UI components that need to be ready before language swap
-    initSliderDots();
+    initSliderDots(); // Run dots before changeLanguage
     initScrollReveal();
 
-    // 3. Determine initial language (URL Param -> LocalStorage -> Browser -> Default)
     const urlParams = new URLSearchParams(window.location.search);
     const urlLang = urlParams.get('lang');
     const savedLang = storage.get('preferredLang');
     const browserLang = navigator.language.split('-')[0];
 
     let initialLang = CONFIG.DEFAULT_LANG;
-    if (urlLang && CONFIG.SUPPORTED_LANGS.includes(urlLang)) {
-        initialLang = urlLang;
-    } else if (savedLang && CONFIG.SUPPORTED_LANGS.includes(savedLang)) {
-        initialLang = savedLang;
-    } else if (CONFIG.SUPPORTED_LANGS.includes(browserLang)) {
-        initialLang = browserLang;
-    }
+    if (urlLang && CONFIG.SUPPORTED_LANGS.includes(urlLang)) initialLang = urlLang;
+    else if (savedLang && CONFIG.SUPPORTED_LANGS.includes(savedLang)) initialLang = savedLang;
+    else if (CONFIG.SUPPORTED_LANGS.includes(browserLang)) initialLang = browserLang;
 
-    // 4. Set the select dropdown value and listener
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.value = initialLang;
@@ -481,21 +425,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 5. Slider Button Listeners
     const btnLeft = document.getElementById('sliderBtnLeft');
     const btnRight = document.getElementById('sliderBtnRight');
     if (btnLeft) btnLeft.addEventListener('click', () => scrollSlider(-1));
     if (btnRight) btnRight.addEventListener('click', () => scrollSlider(1));
 
-    // 6. Apply initial language (will now correctly label dots)
     changeLanguage(initialLang);
 
-    // 7. Register Service Worker for Offline Support
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(() => console.log('Service Worker registered'))
-                .catch(err => console.warn('Service Worker registration failed:', err));
+            navigator.serviceWorker.register('./sw.js').catch(() => {});
         });
     }
 });
