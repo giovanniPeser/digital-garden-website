@@ -36,6 +36,8 @@ const TRANSLATIONS = {
         cap_colors: "Personalize app colors to your style",
         cap_backup: "Secure cloud and local backup support",
         cap_languages: "Support for multiple languages",
+        cta_bottom_title: "Ready to start your digital garden?",
+        cta_bottom_subtitle: "Join thousands of plant lovers and give your plants the care they deserve.",
         privacy_policy: "Privacy Policy",
         support: "Support"
     },
@@ -64,6 +66,8 @@ const TRANSLATIONS = {
         cap_colors: "Personalizza i colori dell'app secondo il tuo stile",
         cap_backup: "Supporto backup sicuro su cloud e locale",
         cap_languages: "Supporto per più lingue",
+        cta_bottom_title: "Pronto a iniziare il tuo giardino digitale?",
+        cta_bottom_subtitle: "Unisciti a migliaia di amanti delle piante e dai alle tue piante la cura che meritano.",
         privacy_policy: "Informativa sulla Privacy",
         support: "Supporto"
     },
@@ -92,6 +96,8 @@ const TRANSLATIONS = {
         cap_colors: "Personnalisez les couleurs de l'application",
         cap_backup: "Prise en charge de la sauvegarde cloud et locale",
         cap_languages: "Support de plusieurs langues",
+        cta_bottom_title: "Prêt à commencer votre jardin numérique ?",
+        cta_bottom_subtitle: "Rejoignez des milliers de passionnés de plantes et offrez à vos plantes les soins qu'elles méritent.",
         privacy_policy: "Politique de Confidentialité",
         support: "Support"
     },
@@ -120,6 +126,8 @@ const TRANSLATIONS = {
         cap_colors: "Personalisieren Sie die App-Farben",
         cap_backup: "Sichere Cloud- und lokale Backup-Unterstützung",
         cap_languages: "Unterstützung für mehrere Sprachen",
+        cta_bottom_title: "Bereit für Ihren digitalen Garten?",
+        cta_bottom_subtitle: "Schließen Sie sich Tausenden von Pflanzenliebhabern an und geben Sie Ihren Pflanzen die Pflege, die sie verdienen.",
         privacy_policy: "Datenschutzerklärung",
         support: "Support"
     },
@@ -148,10 +156,32 @@ const TRANSLATIONS = {
         cap_colors: "Personaliza los colores de la aplicación",
         cap_backup: "Soporte de copia de seguridad local y en la nube",
         cap_languages: "Soporte para varios idiomas",
+        cta_bottom_title: "¿Listo para empezar tu jardín digital?",
+        cta_bottom_subtitle: "Únete a miles de amantes de las plantas y dales a tus plantas el cuidado que merecen.",
         privacy_policy: "Política de Privacidad",
         support: "Soporte"
     }
 };
+
+/**
+ * Updates SEO meta tags based on selected language
+ * @param {string} lang Language code
+ */
+function updateMetaTags(lang) {
+    const translation = TRANSLATIONS[lang] || TRANSLATIONS[CONFIG.DEFAULT_LANG];
+
+    // Update Meta Description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+        metaDescription.setAttribute('content', translation.header_subtitle);
+    }
+
+    // Update Open Graph Description
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+        ogDescription.setAttribute('content', translation.header_subtitle);
+    }
+}
 
 /**
  * Updates all DOM elements with data-t attribute
@@ -174,10 +204,14 @@ function updatePageContent(lang) {
 
     // Update HTML lang attribute
     document.documentElement.lang = lang;
+
+    // Update Meta Tags for SEO
+    updateMetaTags(lang);
 }
 
 /**
- * Updates screenshot image paths with localized versions and cache busting
+ * Updates screenshot image paths with localized versions and cache busting.
+ * Supports WebP with PNG fallback.
  * @param {string} lang Language code
  */
 function updateScreenshots(lang) {
@@ -185,17 +219,31 @@ function updateScreenshots(lang) {
         const baseFile = img.getAttribute('data-base');
         if (!baseFile) return;
 
-        // Use standard relative pathing
-        img.src = `${CONFIG.IMAGE_PATH}/${lang}/${baseFile}?v=${CONFIG.VERSION}`;
+        const filenameNoExt = baseFile.split('.').slice(0, -1).join('.');
+        const version = CONFIG.VERSION;
 
-        // Handle missing localized images with an English fallback
-        img.onerror = () => {
-            if (lang !== CONFIG.DEFAULT_LANG) {
-                console.warn(`Localisation missing for ${baseFile} in ${lang}. Falling back to English.`);
-                img.src = `${CONFIG.IMAGE_PATH}/${CONFIG.DEFAULT_LANG}/${baseFile}?v=${CONFIG.VERSION}`;
-            }
-            img.onerror = null; // Prevent recursion
+        // Strategy: Try localized WebP -> Localized PNG -> English WebP -> English PNG
+        const tryLoad = (targetLang, useWebP) => {
+            const ext = useWebP ? 'webp' : 'png';
+            const newSrc = `${CONFIG.IMAGE_PATH}/${targetLang}/${filenameNoExt}.${ext}?v=${version}`;
+
+            const tempImg = new Image();
+            tempImg.onload = () => {
+                img.src = newSrc;
+            };
+            tempImg.onerror = () => {
+                if (useWebP) {
+                    // Try PNG for same lang
+                    tryLoad(targetLang, false);
+                } else if (targetLang !== CONFIG.DEFAULT_LANG) {
+                    // Try WebP for default lang
+                    tryLoad(CONFIG.DEFAULT_LANG, true);
+                }
+            };
+            tempImg.src = newSrc;
         };
+
+        tryLoad(lang, true);
     });
 }
 
