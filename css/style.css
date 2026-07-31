@@ -13,7 +13,23 @@
     --text-color: #333333;
     --white: #ffffff;
     --shadow: 0 8px 20px rgba(0,0,0,0.15);
-    --transition: all 0.3s ease;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Custom Themed Scrollbar --- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--surface-color);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+    border: 2px solid var(--surface-color);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
 }
 
 * {
@@ -29,6 +45,12 @@ body {
     background-color: var(--background-color);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+}
+
+/* --- Improved Focus States for Accessibility --- */
+:focus-visible {
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 4px;
 }
 
 /* --- Reveal on Scroll --- */
