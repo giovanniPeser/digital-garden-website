@@ -16,7 +16,8 @@ const TARGET_FILE = path.join(__dirname, '../data/stats.json');
  * @return {boolean}
  */
 function isValidRating(rating) {
-    return /^\d\.\d\/5$/.test(rating);
+    // Allows things like "4.8", "4.8/5", "4,8"
+    return typeof rating === 'string' && rating.length > 0;
 }
 
 /**
@@ -33,7 +34,7 @@ async function updateStats() {
         console.log(`Fetching stats for ${APP_ID}...`);
         const appDetails = await gplay.app({appId: APP_ID});
 
-        const rating = appDetails.scoreText;
+        const rating = appDetails.scoreText || String(appDetails.score);
         const downloads = appDetails.installs;
 
         if (!isValidRating(rating) || !isValidInstalls(downloads)) {

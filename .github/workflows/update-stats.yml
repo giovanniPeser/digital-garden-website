@@ -19,10 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
@@ -36,7 +36,7 @@ jobs:
         run: node -e "JSON.parse(require('fs').readFileSync('data/stats.json','utf8'))"
 
       - name: Commit and Push Changes
-        uses: stefanzweifel/git-auto-commit-action@8756aa972d0b057337327b11684346e0b380d857 # v5.0.0
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Bot: Update live Play Store statistics"
           file_pattern: 'data/stats.json'

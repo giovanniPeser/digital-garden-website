@@ -156,7 +156,7 @@ body {
     .social-proof.dark .badge {
         background: rgba(255, 255, 255, 0.1);
         color: var(--white);
-        border-color: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.2);
     }
 }
 
@@ -250,27 +250,28 @@ h1 {
 }
 
 .social-proof .badge {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     color: var(--white);
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 8px;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 10px;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .social-proof .badge i {
-    color: #FFD700; /* Gold stars */
+    color: #FFD700; /* Gold for stars and check-circles */
 }
 
 .social-proof.dark .badge {
-    background: rgba(0, 0, 0, 0.05);
-    color: var(--text-color);
-    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(45, 90, 39, 0.08);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
 }
 
 .play-store-badge {
