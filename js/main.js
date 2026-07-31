@@ -12,7 +12,7 @@
  * @const {!Object}
  */
 const CONFIG = {
-    VERSION: '1.3.1',
+    VERSION: '1.3.2',
     DEFAULT_LANG: 'en',
     SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es'],
     IMAGE_PATH: './images',
@@ -20,7 +20,7 @@ const CONFIG = {
 };
 
 /** @type {!Object<string, string>} */
-let LIVE_STATS = {
+const LIVE_STATS = {
     rating: '4.8/5',
     downloads: '1,000+'
 };
@@ -136,7 +136,7 @@ const TRANSLATIONS = {
         aria_select_language: 'Choisir la langue',
         aria_dot_nav: 'Aller à la capture d\'écran ',
         app_rating: 'Note {{rating}}',
-        app_downloads: '1 000+ Téléchargements'
+        app_downloads: '{{downloads}} Téléchargements'
     },
     de: {
         header_title: 'Digital Garden',

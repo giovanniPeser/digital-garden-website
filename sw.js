@@ -3,14 +3,14 @@
  * Provides offline support and resource caching
  */
 
-const CACHE_NAME = 'digital-garden-v1.3.1';
+const CACHE_NAME = 'digital-garden-v1.3.2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './privacy.html',
-    './css/style.css?v=1.3.1',
-    './js/main.js?v=1.3.1',
-    './data/stats.json?v=1.3.1',
+    './css/style.css?v=1.3.2',
+    './js/main.js?v=1.3.2',
+    './data/stats.json?v=1.3.2',
     './manifest.json',
     './images/ic_launcher-playstore.png'
 ];
