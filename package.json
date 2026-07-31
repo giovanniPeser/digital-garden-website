@@ -4,6 +4,6 @@
   "private": true,
   "description": "Automated stats updater for Digital Garden",
   "dependencies": {
-    "google-play-scraper": "*"
+    "google-play-scraper": "10.1.3"
   }
 }
