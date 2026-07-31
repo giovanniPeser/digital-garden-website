@@ -353,4 +353,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Init Animations & Interactive Elements
     initScrollReveal();
     initSliderDots();
+
+    // 6. Register Service Worker for Offline Support
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Service Worker registered successfully'))
+                .catch(err => console.warn('Service Worker registration failed:', err));
+        });
+    }
 });
