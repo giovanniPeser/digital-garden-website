@@ -334,16 +334,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const browserLang = navigator.language.split('-')[0];
     const initialLang = savedLang || (TRANSLATIONS[browserLang] ? browserLang : CONFIG.DEFAULT_LANG);
 
-    // 2. Set the select dropdown value
+    // 2. Set the select dropdown value and listener
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.value = initialLang;
+        langSelect.addEventListener('change', (e) => changeLanguage(e.target.value));
     }
 
-    // 3. Apply initial language
+    // 3. Slider Button Listeners
+    const btnLeft = document.getElementById('sliderBtnLeft');
+    const btnRight = document.getElementById('sliderBtnRight');
+    if (btnLeft) btnLeft.addEventListener('click', () => scrollSlider(-1));
+    if (btnRight) btnRight.addEventListener('click', () => scrollSlider(1));
+
+    // 4. Apply initial language
     changeLanguage(initialLang);
 
-    // 4. Init Animations & Interactive Elements
+    // 5. Init Animations & Interactive Elements
     initScrollReveal();
     initSliderDots();
 });
