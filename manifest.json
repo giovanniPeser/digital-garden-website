@@ -1,0 +1,16 @@
+{
+  "name": "Digital Garden",
+  "short_name": "Digital Garden",
+  "description": "Smart plant care and AI diagnosis",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2D5A27",
+  "icons": [
+    {
+      "src": "images/ic_launcher-playstore.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

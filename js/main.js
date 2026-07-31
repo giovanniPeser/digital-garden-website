@@ -276,6 +276,57 @@ function scrollSlider(direction) {
     });
 }
 
+/**
+ * Initializes Reveal on Scroll animations
+ */
+function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entries[0].target.tagName === 'HEADER') {
+                 entry.target.classList.add('active');
+                 return;
+            }
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/**
+ * Initializes and manages Slider Dots
+ */
+function initSliderDots() {
+    const slider = document.getElementById('screenshotSlider');
+    const dotsContainer = document.getElementById('sliderDots');
+    const items = document.querySelectorAll('.screenshot-item');
+    if (!slider || !dotsContainer) return;
+
+    // Create dots
+    items.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            slider.scrollTo({
+                left: items[index].offsetLeft - slider.offsetLeft,
+                behavior: 'smooth'
+            });
+        });
+        dotsContainer.appendChild(dot);
+    });
+
+    // Update active dot on scroll
+    slider.addEventListener('scroll', () => {
+        const index = Math.round(slider.scrollLeft / items[0].offsetWidth);
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }, { passive: true });
+}
+
 // Initialization on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Determine initial language
@@ -291,4 +342,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Apply initial language
     changeLanguage(initialLang);
+
+    // 4. Init Animations & Interactive Elements
+    initScrollReveal();
+    initSliderDots();
 });
