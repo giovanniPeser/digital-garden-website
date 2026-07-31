@@ -3,7 +3,7 @@
  * This runs in a Node.js environment (GitHub Actions).
  */
 
-const gplay = require('google-play-scraper');
+const gplay = require('google-play-scraper').default;
 const fs = require('fs');
 const path = require('path');
 
