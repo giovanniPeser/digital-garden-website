@@ -12,15 +12,17 @@
  * @const {!Object}
  */
 const CONFIG = {
-    VERSION: '1.3.0',
+    VERSION: '1.3.1',
     DEFAULT_LANG: 'en',
     SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es'],
     IMAGE_PATH: './images',
-    // 💡 UPDATE THESE STATS from Play Console before every release
-    STATS: {
-        RATING: '4.8/5',
-        DOWNLOADS: '1,000+'
-    }
+    STATS_PATH: './data/stats.json'
+};
+
+/** @type {!Object<string, string>} */
+let LIVE_STATS = {
+    rating: '4.8/5',
+    downloads: '1,000+'
 };
 
 /**
@@ -134,7 +136,7 @@ const TRANSLATIONS = {
         aria_select_language: 'Choisir la langue',
         aria_dot_nav: 'Aller à la capture d\'écran ',
         app_rating: 'Note {{rating}}',
-        app_downloads: '{{downloads}} Téléchargements'
+        app_downloads: '1 000+ Téléchargements'
     },
     de: {
         header_title: 'Digital Garden',
@@ -178,9 +180,9 @@ const TRANSLATIONS = {
         get_it_google_play: 'Disponible en Google Play',
         feature_reminders_title: 'Recordatorios Inteligentes',
         feature_reminders_desc: 'Programas personalizados para riego y fertilización adaptados a tus especies de plantas.',
-        feature_ai_title: 'AI Health Expert',
+        feature_ai_title: 'Experto en Salud IA',
         feature_ai_desc: 'Identifica enfermedades de las plantas al instante con una foto. Obtén consejos profesionales de nuestra IA.',
-        feature_database_title: 'Rich Database',
+        feature_database_title: 'Base de Datos Rica',
         feature_database_desc: 'Consejos detallados que incluyen tipos de suelo, requisitos de luz y tamaño de maceta.',
         screenshots_title: 'Descubre muchas otras funcionalidades',
         screenshots_subtitle: 'Explora la interfaz intuitiva y las funciones avanzadas diseñadas para que tu jardín prospere.',
@@ -212,7 +214,7 @@ const TRANSLATIONS = {
 
 /**
  * Safely accesses localStorage with a fallback.
- * @return {!Object}
+ * @const {!Object}
  */
 const storage = {
     /**
@@ -240,7 +242,7 @@ const storage = {
 };
 
 /**
- * Updates SEO meta tags based on selected language.
+ * Updates SEO meta tags and canonical URL based on selected language.
  * @param {string} lang Language code.
  */
 function updateMetaTags(lang) {
@@ -257,6 +259,18 @@ function updateMetaTags(lang) {
     if (ogDescription) {
         ogDescription.setAttribute('content', translation.header_subtitle);
     }
+
+    // Update Canonical URL
+    const canonical = document.querySelector('link[rel="canonical"]');
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    const twitterUrl = document.querySelector('meta[property="twitter:url"]');
+
+    const baseUrl = 'https://pesericog6.github.io/sitoApp/';
+    const localizedUrl = lang === CONFIG.DEFAULT_LANG ? baseUrl : `${baseUrl}?lang=${lang}`;
+
+    if (canonical) canonical.setAttribute('href', localizedUrl);
+    if (ogUrl) ogUrl.setAttribute('content', localizedUrl);
+    if (twitterUrl) twitterUrl.setAttribute('content', localizedUrl);
 }
 
 /**
@@ -272,8 +286,8 @@ function updatePageContent(lang) {
             let text = translation[key];
 
             // Replace placeholders with real stats
-            text = text.replace('{{rating}}', CONFIG.STATS.RATING);
-            text = text.replace('{{downloads}}', CONFIG.STATS.DOWNLOADS);
+            text = text.replace('{{rating}}', LIVE_STATS.rating);
+            text = text.replace('{{downloads}}', LIVE_STATS.downloads);
 
             // Check if it's a value (like an input) or text
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
@@ -308,7 +322,6 @@ function updatePageContent(lang) {
 /**
  * Updates screenshot image paths with localized versions and cache busting.
  * Currently supports PNG only as repo only contains PNGs.
- * Logic kept simple to avoid redundant network failures.
  * @param {string} lang Language code.
  */
 function updateScreenshots(lang) {
@@ -317,8 +330,6 @@ function updateScreenshots(lang) {
         if (!baseFile) return;
 
         const version = CONFIG.VERSION;
-
-        // Directly try localized PNG
         const trySrc = `${CONFIG.IMAGE_PATH}/${lang}/${baseFile}?v=${version}`;
 
         const tempImg = new Image();
@@ -327,7 +338,6 @@ function updateScreenshots(lang) {
         };
         tempImg.onerror = () => {
             if (lang !== CONFIG.DEFAULT_LANG) {
-                // Fallback to English PNG
                 img.src = `${CONFIG.IMAGE_PATH}/${CONFIG.DEFAULT_LANG}/${baseFile}?v=${version}`;
             }
         };
@@ -370,7 +380,6 @@ function scrollSlider(direction) {
 function initScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            // Header is special-cased to animate on load.
             if (entry.target.tagName === 'HEADER') {
                  entry.target.classList.add('active');
                  return;
@@ -418,17 +427,39 @@ function initSliderDots() {
     }, { passive: true });
 }
 
+/**
+ * Fetches latest stats from stats.json.
+ * @return {!Promise}
+ */
+async function fetchStats() {
+    try {
+        const response = await fetch(CONFIG.STATS_PATH + '?v=' + CONFIG.VERSION);
+        if (response.ok) {
+            const data = await response.json();
+            LIVE_STATS.rating = data.rating || LIVE_STATS.rating;
+            LIVE_STATS.downloads = data.downloads || LIVE_STATS.downloads;
+        }
+    } catch (e) {
+        console.warn('Failed to fetch live stats, using defaults.');
+    }
+}
+
 // Initialization on DOM Ready
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Determine initial language (URL Param -> LocalStorage -> Browser -> Default)
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Fetch live stats first
+    await fetchStats();
+
+    // 2. Initialize UI components that need to be ready before language swap
+    initSliderDots();
+    initScrollReveal();
+
+    // 3. Determine initial language (URL Param -> LocalStorage -> Browser -> Default)
     const urlParams = new URLSearchParams(window.location.search);
     const urlLang = urlParams.get('lang');
-
     const savedLang = storage.get('preferredLang');
     const browserLang = navigator.language.split('-')[0];
 
     let initialLang = CONFIG.DEFAULT_LANG;
-
     if (urlLang && CONFIG.SUPPORTED_LANGS.includes(urlLang)) {
         initialLang = urlLang;
     } else if (savedLang && CONFIG.SUPPORTED_LANGS.includes(savedLang)) {
@@ -437,39 +468,33 @@ document.addEventListener('DOMContentLoaded', () => {
         initialLang = browserLang;
     }
 
-    // 2. Set the select dropdown value and listener
+    // 4. Set the select dropdown value and listener
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.value = initialLang;
         langSelect.addEventListener('change', (e) => {
             const newLang = e.target.value;
-            // Update URL without reloading (optional, but professional)
             const newUrl = new URL(window.location);
             newUrl.searchParams.set('lang', newLang);
             window.history.pushState({}, '', newUrl);
-
             changeLanguage(newLang);
         });
     }
 
-    // 3. Slider Button Listeners
+    // 5. Slider Button Listeners
     const btnLeft = document.getElementById('sliderBtnLeft');
     const btnRight = document.getElementById('sliderBtnRight');
     if (btnLeft) btnLeft.addEventListener('click', () => scrollSlider(-1));
     if (btnRight) btnRight.addEventListener('click', () => scrollSlider(1));
 
-    // 4. Apply initial language
+    // 6. Apply initial language (will now correctly label dots)
     changeLanguage(initialLang);
 
-    // 5. Init Animations & Interactive Elements
-    initScrollReveal();
-    initSliderDots();
-
-    // 6. Register Service Worker for Offline Support
+    // 7. Register Service Worker for Offline Support
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('Service Worker registered successfully'))
+                .then(() => console.log('Service Worker registered'))
                 .catch(err => console.warn('Service Worker registration failed:', err));
         });
     }

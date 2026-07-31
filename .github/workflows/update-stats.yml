@@ -19,21 +19,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@60edb5dd545a775178f525247423dd3a0e93360b # v4.0.2
         with:
           node-version: '20'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install # Note: npm ci requires a package-lock.json. Using install for now until lockfile is pushed.
 
       - name: Run Stats Updater
         run: node scripts/update-stats.js
 
+      - name: Syntax Check
+        run: node --check js/main.js
+
       - name: Commit and Push Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@8756aa972d0b057337327b11684346e0b380d857 # v5.0.0
         with:
           commit_message: "Bot: Update live Play Store statistics"
-          file_pattern: 'js/main.js'
+          file_pattern: 'data/stats.json'
