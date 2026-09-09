@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
    <!-- Primary URL (Canonical for English) -->
    <url>
-      <loc>https://pesericog6.github.io/sitoApp/</loc>
+      <loc>https://digitalgardensupport.com/</loc>
       <lastmod>2026-07-31</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1.0</priority>
    </url>
    <!-- Italian -->
    <url>
-      <loc>https://pesericog6.github.io/sitoApp/?lang=it</loc>
+      <loc>https://digitalgardensupport.com/?lang=it</loc>
       <lastmod>2026-07-31</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
    </url>
    <!-- French -->
    <url>
-      <loc>https://pesericog6.github.io/sitoApp/?lang=fr</loc>
+      <loc>https://digitalgardensupport.com/?lang=fr</loc>
       <lastmod>2026-07-31</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
    </url>
    <!-- German -->
    <url>
-      <loc>https://pesericog6.github.io/sitoApp/?lang=de</loc>
+      <loc>https://digitalgardensupport.com/?lang=de</loc>
       <lastmod>2026-07-31</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
    </url>
    <!-- Spanish -->
    <url>
-      <loc>https://pesericog6.github.io/sitoApp/?lang=es</loc>
+      <loc>https://digitalgardensupport.com/?lang=es</loc>
       <lastmod>2026-07-31</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
    </url>
    <!-- Privacy Policy -->
    <url>
-      <loc>https://pesericog6.github.io/sitoApp/privacy.html</loc>
+      <loc>https://digitalgardensupport.com/privacy</loc>
       <lastmod>2026-07-31</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.5</priority>

@@ -12,7 +12,7 @@
  * @const {!Object}
  */
 const CONFIG = {
-    VERSION: '1.3.4',
+    VERSION: '1.3.5',
     DEFAULT_LANG: 'en',
     SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es'],
     IMAGE_PATH: './images',
@@ -237,7 +237,7 @@ const storage = {
  */
 function updateMetaTags(lang) {
     const translation = TRANSLATIONS[lang] || TRANSLATIONS[CONFIG.DEFAULT_LANG];
-    const baseUrl = 'https://pesericog6.github.io/sitoApp/';
+    const baseUrl = 'https://digitalgardensupport.com/';
     const localizedUrl = lang === CONFIG.DEFAULT_LANG ? baseUrl : `${baseUrl}?lang=${lang}`;
 
     const metaDescription = document.querySelector('meta[name="description"]');
