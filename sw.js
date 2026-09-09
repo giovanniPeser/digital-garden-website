@@ -3,14 +3,14 @@
  * Provides offline support and resource caching
  */
 
-const CACHE_NAME = 'digital-garden-v1.3.7';
+const CACHE_NAME = 'digital-garden-v1.3.5';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './privacy.html',
-    './css/style.css?v=1.3.7',
-    './js/main.js?v=1.3.7',
-    './data/stats.json?v=1.3.7',
+    './css/style.css?v=1.3.5',
+    './js/main.js?v=1.3.5',
+    './data/stats.json?v=1.3.5',
     './manifest.json',
     './images/ic_launcher-playstore.png'
 ];
@@ -55,15 +55,17 @@ self.addEventListener('fetch', (event) => {
             }
 
             // Fallback for extensionless URLs (e.g. /privacy -> /privacy.html)
-            // Works in production AND on localhost
-            if (url.origin === self.location.origin) {
-                const path = url.pathname;
-                if (!path.includes('.') && !path.endsWith('/')) {
-                    const fallbackUrl = path + '.html';
-                    return caches.match(fallbackUrl).then((htmlResponse) => {
-                        return htmlResponse || fetch(event.request);
-                    });
-                }
+            // This allows the PWA to work with Clean URLs even on simple servers
+            if (url.origin === self.location.origin &&
+                !url.pathname.endsWith('.html') &&
+                !url.pathname.includes('.')) {
+
+                const cleanPath = url.pathname.endsWith('/') ? url.pathname.slice(0, -1) : url.pathname;
+                const fallbackUrl = cleanPath + '.html';
+
+                return caches.match(fallbackUrl).then((htmlResponse) => {
+                    return htmlResponse || fetch(event.request);
+                });
             }
 
             return fetch(event.request).then((networkResponse) => {
