@@ -12,7 +12,7 @@
  * @const {!Object}
  */
 const CONFIG = {
-    VERSION: '1.3.2',
+    VERSION: '1.3.4',
     DEFAULT_LANG: 'en',
     SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es'],
     IMAGE_PATH: './images',
