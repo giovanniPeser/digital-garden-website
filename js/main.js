@@ -12,7 +12,7 @@
  * @const {!Object}
  */
 const CONFIG = {
-    VERSION: '1.3.5',
+    VERSION: '1.3.7',
     DEFAULT_LANG: 'en',
     SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es'],
     IMAGE_PATH: './images',
@@ -397,11 +397,26 @@ async function fetchStats() {
     } catch (e) {}
 }
 
+/**
+ * Fixes links for local development (e.g. privacy -> privacy.html).
+ * Prevents 404 errors on simple local servers.
+ */
+function fixLocalLinks() {
+    const isLocal = window.location.hostname === 'localhost' ||
+                    window.location.hostname === '127.0.0.1';
+    if (isLocal) {
+        document.querySelectorAll('a[href="privacy"]').forEach(link => {
+            link.href = 'privacy.html';
+        });
+    }
+}
+
 // Initialization on DOM Ready
 document.addEventListener('DOMContentLoaded', async () => {
     await fetchStats();
     initSliderDots(); // Run dots before changeLanguage
     initScrollReveal();
+    fixLocalLinks();
 
     const urlParams = new URLSearchParams(window.location.search);
     const urlLang = urlParams.get('lang');
