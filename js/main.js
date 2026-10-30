@@ -14,7 +14,7 @@
 const CONFIG = {
     VERSION: '1.3.5',
     DEFAULT_LANG: 'en',
-    SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es'],
+    SUPPORTED_LANGS: ['en', 'it', 'fr', 'de', 'es', 'ja'],
     IMAGE_PATH: './images',
     STATS_PATH: './data/stats.json'
 };
@@ -209,6 +209,42 @@ const TRANSLATIONS = {
         aria_dot_nav: 'Ir a la captura de pantalla ',
         app_rating: 'Calificación {{rating}}',
         app_downloads: '{{downloads}} Descargas'
+    },
+    ja: {
+        header_title: 'Digital Garden',
+        header_subtitle: 'AI診断と自動お世話機能で、植物の栽培をより安心・快適にするスマートボタニカルパートナー。',
+        get_it_google_play: 'Google Play で手に入れよう',
+        feature_reminders_title: 'スマートリマインダー',
+        feature_reminders_desc: '植物の品種に合わせた、水やりや肥料のカスタムスケジュール。',
+        feature_ai_title: 'AI植物ドクター',
+        feature_ai_desc: '写真を撮るだけで植物の病気を即座に診断。AI専門家からプロのアドバイスを受けられます。',
+        feature_database_title: '豊富なデータベース',
+        feature_database_desc: '土の種類、必要な日当たり、鉢のサイズなど、詳細なお世話のヒントが満載。',
+        screenshots_title: '多彩な機能をチェック',
+        screenshots_subtitle: 'ガーデンを健康に育てるための直感的なUIと先進機能を体験してください。',
+        cap_garden_list: 'すべての植物をひとつの場所で管理',
+        cap_add_plant: '新しい品種を簡単・スピーディーに追加',
+        cap_plant_detail: '植物の健康状態やスケジュールを一覧表示',
+        cap_ai_help: 'AIボタニカル専門家とチャットで相談',
+        cap_recognition: '写真から植物の品種を即座に識別',
+        cap_schedule: '毎日の簡単なお世話タスクオーガナイザー',
+        cap_hints_1: '最適な土の配合に関する専門アドバイス',
+        cap_hints_2: '成長を促す日当たり条件の最適化',
+        cap_hints_3: '正しい水やりと剪定のテクニック',
+        cap_theme: 'お好みで選べるカスタムアイコンパック',
+        cap_colors: 'アプリのテーマカラーを自由にカスタマイズ',
+        cap_backup: '安心のクラウド・ローカルバックアップ機能',
+        cap_languages: '多言語表示に対応',
+        cta_bottom_title: 'デジタルガーデニングを始めましょう',
+        cta_bottom_subtitle: '全国の植物愛好家と一緒に、大切な植物に最高のケアを届けましょう。',
+        privacy_policy: 'プライバシーポリシー',
+        support: 'サポート',
+        aria_prev_screenshot: '前のスクリーンショット',
+        aria_next_screenshot: '次のスクリーンショット',
+        aria_select_language: '言語を選択',
+        aria_dot_nav: 'スクリーンショットへ移動 ',
+        app_rating: '評価 {{rating}}',
+        app_downloads: '{{downloads}} ダウンロード'
     }
 };
 

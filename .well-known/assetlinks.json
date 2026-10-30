@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.digitalgarden",
+      "sha256_cert_fingerprints": [
+        "A2:88:6D:EA:8E:8A:C2:4E:0F:33:1B:50:13:02:46:02:53:C0:9B:C6:99:6C:78:DD:FD:51:79:18:EF:FD:A8:CB"
+      ]
+    }
+  }
+]
