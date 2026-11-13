@@ -1,6 +1,6 @@
 /**
  * @fileoverview Main application logic for the Digital Garden landing page.
- * Handles localization via external JSON files, screenshot management, animations, and PWA registration.
+ * Handles localization via external JSON files, screenshot management, animations, audio feedback, and PWA registration.
  *
  * Aligned with Google JavaScript Style Guide.
  */
@@ -91,6 +91,27 @@ const storage = {
         } catch (e) {}
     }
 };
+
+const APP_SOUNDS = [
+    './audio/sound_water.ogg',
+    './audio/sound_fertilize.ogg',
+    './audio/sound_repot.ogg',
+    './audio/sound_camera.ogg'
+];
+
+/**
+ * Plays one of the app's native .ogg sound effects when switching screenshots.
+ */
+function playAppSound() {
+    try {
+        const randomSound = APP_SOUNDS[Math.floor(Math.random() * APP_SOUNDS.length)];
+        const audio = new Audio(randomSound);
+        audio.volume = 0.6;
+        audio.play().catch(() => {});
+    } catch (e) {
+        // Suppress playback errors
+    }
+}
 
 /**
  * Updates SEO meta tags and canonical URL based on selected language.
@@ -218,6 +239,7 @@ async function changeLanguage(lang) {
 function scrollSlider(direction) {
     const slider = document.getElementById('screenshotSlider');
     if (!slider) return;
+    playAppSound();
     const scrollAmount = slider.clientWidth * 0.8;
     slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
@@ -254,6 +276,7 @@ function initSliderDots() {
         dot.classList.add('dot');
         if (index === 0) dot.classList.add('active');
         dot.addEventListener('click', () => {
+            playAppSound();
             slider.scrollTo({ left: items[index].offsetLeft - slider.offsetLeft, behavior: 'smooth' });
         });
         dotsContainer.appendChild(dot);
