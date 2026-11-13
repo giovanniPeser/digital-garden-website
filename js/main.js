@@ -202,17 +202,18 @@ async function loadTranslations(lang) {
  * @param {string} lang Language code.
  */
 function updateScreenshots(lang) {
+    const imgFolder = lang === 'ja' ? 'jp' : lang;
     document.querySelectorAll('.screenshot-item img').forEach(img => {
         const baseFile = img.getAttribute('data-base');
         if (!baseFile) return;
 
         const version = CONFIG.VERSION;
-        const trySrc = `${CONFIG.IMAGE_PATH}/${lang}/${baseFile}?v=${version}`;
+        const trySrc = `${CONFIG.IMAGE_PATH}/${imgFolder}/${baseFile}?v=${version}`;
 
         const tempImg = new Image();
         tempImg.onload = () => { img.src = trySrc; };
         tempImg.onerror = () => {
-            if (lang !== CONFIG.DEFAULT_LANG) {
+            if (imgFolder !== CONFIG.DEFAULT_LANG) {
                 img.src = `${CONFIG.IMAGE_PATH}/${CONFIG.DEFAULT_LANG}/${baseFile}?v=${version}`;
             }
         };
